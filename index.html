@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Место</title>
-</head>
-<body>
-  <div class="page">
-    <header class="header">
-      <img class="header__logo" alt="" src="">
-    </header>
-    <main class="content">
-      <section class="profile">
-        <div class="avatar">
-          <img class="avatar__image" alt="" src="">
-        </div>
-        <form class="form">
-          <fieldset class="form__user-info">
-            <p>Жак-Ив Кусто</p>
-            <p>Исследователь океана</p>
-          </fieldset>
-          <fieldset class="form__button">
-            <input type="submit">
-          </fieldset>
-        </form>
-      </section>
-      <section class="elements"></section>
-    </main>
-    <footer class="footer">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="pages/index.css" rel="stylesheet" />
+    <title>Место</title>
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <img class="header__logo" alt="логотип место" src="images/Vector.svg" />
+      </header>
+      <main class="content">
+        <section class="profile">
+          <div class="avatar">
+            <img
+              class="avatar__image"
+              alt="фото профиля"
+              src="images/Avatar.png"
+            />
+          </div>
+          <form class="form">
+            <fieldset class="form__profile-info">
+              <p class="form__name">Жак-Ив Кусто</p>
+              <button class="form__edit-button" type="submit" value="">
+                <img src="images/edit-button.svg" alt="кнопка редактирования" />
+              </button>
+              <p class="form__job">Исследователь океана</p>
+            </fieldset>
+          </form>
 
-    </footer>
-  </div>
-</body>
+          <button class="add-button" type="submit" value="">
+            <img src="images/add-button.svg" alt="кнопка добавления" />
+          </button>
+        </section>
+        <section class="elements"></section>
+      </main>
+      <footer class="footer"></footer>
+    </div>
+  </body>
 </html>

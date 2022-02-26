@@ -1,0 +1,10 @@
+.form__profile-info{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  grid-template-rows: 39px 18px;
+  grid-template-columns: 294px 24px;
+  row-gap: 16px;
+  column-gap: 18px;
+}

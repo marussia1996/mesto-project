@@ -1,0 +1,11 @@
+
+.form__edit-button{
+  min-width: 24px;
+  min-height: 24px;
+  align-self: end;
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  box-sizing: border-box;
+  border: 1px solid #FFFFFF;
+}

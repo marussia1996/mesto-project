@@ -1,0 +1,11 @@
+.form__job{
+  margin: 0;
+  color: #fff;
+  grid-column: span 2;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+
+}
