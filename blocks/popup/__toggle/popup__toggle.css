@@ -1,0 +1,14 @@
+.popup__toggle{
+  position: absolute;
+  top:-40px;
+  left: 438px;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  padding: 0;
+  background-color: rgba(0,0,0,0.5);
+  cursor: pointer;
+}
+.popup__toggle:hover{
+  opacity: 0.5;
+}
