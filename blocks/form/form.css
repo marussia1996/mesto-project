@@ -1,4 +1,10 @@
 .form{
   max-width: 430px;
-  min-height: 330px;
+  max-height: 330px;
+}
+
+@media screen and (max-width: 320px){
+  .form{
+    min-height: 332px;
+  }
 }
