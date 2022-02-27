@@ -18,5 +18,12 @@
   .profile-info__edit-button{
     max-width: 18px;
     min-height: 18px;
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .profile-info__edit-button{
+    align-self: end;
   }
 }

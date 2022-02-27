@@ -13,3 +13,10 @@
 .add-button:hover{
   opacity: 0.6;
 }
+
+@media screen and (max-width: 320px){
+  .add-button{
+    min-width: 100%;
+    min-height: 50px;
+  }
+}

@@ -10,15 +10,15 @@
 
 @media screen and (max-width: 768px){
   .profile-info__group{
-    grid-template-columns: minmax(186px,294px) minmax(18px,24px);
+    grid-template-columns: minmax(189px,294px) minmax(18px,24px);
     column-gap: 14px;
   }
 }
 
 @media screen and (max-width: 320px){
   .profile-info__group{
-    grid-template-rows: 26px;
-    grid-template-columns: 1fr 18px;
-
+    grid-template-rows: 27px;
+    grid-template-columns: 189px 18px;
+    margin-left: 46px;
   }
 }
