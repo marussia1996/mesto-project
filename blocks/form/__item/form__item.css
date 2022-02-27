@@ -1,0 +1,17 @@
+.form__item{
+  padding: 0;
+  margin-bottom: 30px;
+  display: block;
+  width: 358px;
+  height: 27px;
+  border: 0;
+  border-bottom: 1px solid #000000;
+  font-family: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+}
+.form__item:last-child{
+  margin-bottom: 48px;
+}
