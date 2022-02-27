@@ -1,8 +1,8 @@
-.form__job{
+.profile-info__job{
   margin: 0;
   color: #fff;
   grid-column: span 2;
-  font-family: inherit;
+  font-family: 'Inter',sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -10,7 +10,7 @@
 
 }
 @media screen and (max-width: 320px){
-  .form__job{
+  .profile-info__job{
       font-family: 'Inter';
       font-style: normal;
       font-weight: normal;

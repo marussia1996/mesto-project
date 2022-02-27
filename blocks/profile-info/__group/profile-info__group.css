@@ -1,0 +1,24 @@
+.profile-info__group{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  grid-template-rows: 39px;
+  grid-template-columns: 294px 24px;
+  column-gap: 18px;
+}
+
+@media screen and (max-width: 768px){
+  .profile-info__group{
+    grid-template-columns: minmax(186px,294px) minmax(18px,24px);
+    column-gap: 14px;
+  }
+}
+
+@media screen and (max-width: 320px){
+  .profile-info__group{
+    grid-template-rows: 26px;
+    grid-template-columns: 1fr 18px;
+
+  }
+}

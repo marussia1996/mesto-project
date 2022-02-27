@@ -5,6 +5,11 @@
   padding: 0;
   align-self: center;
   background-color: black;
+  border: 2px solid #FFFFFF;
   box-sizing: border-box;
-  border: 1px solid #FFFFFF;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.add-button:hover{
+  opacity: 0.6;
 }

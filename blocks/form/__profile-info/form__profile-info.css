@@ -8,3 +8,13 @@
   row-gap: 16px;
   column-gap: 18px;
 }
+
+
+@media screen and (max-width: 320px){
+  .form__profile-info{
+    grid-template-rows: 26px 14px;
+    grid-template-columns: 282px 18px;
+    row-gap: 10px;
+    column-gap: 14px;
+  }
+}

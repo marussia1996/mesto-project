@@ -1,0 +1,6 @@
+.element__group{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  margin: 25px 15px 31px 21px;
+  align-items: center;
+}
