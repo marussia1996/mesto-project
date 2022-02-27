@@ -1,7 +1,7 @@
 .form__heading{
   margin: 0;
   padding: 34px 0 54px ;
-  width: 330px;
+
   font-family: inherit;
   font-style: normal;
   font-weight: 900;
@@ -9,4 +9,18 @@
   line-height: 29px;
 
   color: #000000;
+}
+@media screen and (max-width: 768px){
+  .form__heading{
+    font-size: calc(18px + (24 - 18) * ( (100vw - 320px) / ( 768 - 320) ));
+    line-height: calc(22px + (29 - 22) * ( (100vw - 320px) / ( 768 - 320) ));
+  }
+}
+@media screen and (max-width: 320px){
+  .form__heading{
+    font-size: 18px;
+    line-height: 22px;
+    padding: 25px 0 75px ;
+  }
+
 }
