@@ -10,6 +10,10 @@
   border: 1px solid #FFFFFF;
   cursor: pointer;
   font-size: 0;
+  background-image: url(../../../images/edit-button.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+
 }
 .profile__edit-button:hover{
   opacity: 0.6;
