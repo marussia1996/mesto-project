@@ -2,8 +2,14 @@
   min-width: 22px;
   min-height: 19px;
   background-image: url(../../../images/like.svg);
-  background-size: cover;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background-color: #fff;
 }
 .element__like:hover{
   opacity: 0.5;

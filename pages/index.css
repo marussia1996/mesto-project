@@ -14,7 +14,6 @@
 @import url(../blocks/profile/__add-button/profile__add-button.css);
 @import url(../blocks/elements/elements.css);
 @import url(../blocks/element/element.css);
-@import url(../blocks/element/__mask-group/element__mask-group.css);
 @import url(../blocks/element/__image/element__image.css);
 @import url(../blocks/element/__group/element__group.css);
 @import url(../blocks/element/__text/element__text.css);
@@ -25,7 +24,6 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__toggle/popup__toggle.css);
 @import url(../blocks/form/form.css);
-@import url(../blocks/form/__main-container/form__main-container.css);
 @import url(../blocks/form/__heading/form__heading.css);
 @import url(../blocks/form/__input-container/form__input-container.css);
 @import url(../blocks/form/__item/form__item.css);
