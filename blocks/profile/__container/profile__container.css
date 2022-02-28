@@ -1,4 +1,4 @@
-.profile-info{
+.profile__container{
   max-width: 336px;
   max-height: 73px;
   margin: 22px auto 25px 0;
@@ -7,12 +7,12 @@
   row-gap: 16px;
 }
 @media screen and (max-width: 768px){
-  .profile-info{
+  .profile__container{
     margin: 22px auto 25px;
   }
 }
 @media screen and (max-width: 320px){
-  .profile-info{
+  .profile__container{
     width: 100%;
     max-height: 54px;
     margin: 26px 0 36px 0;

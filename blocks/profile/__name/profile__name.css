@@ -1,4 +1,4 @@
-.profile-info__name{
+.profile__name{
   margin: 0;
   color: #fff;
   font-family: 'Inter',sans-serif;
@@ -8,13 +8,13 @@
   line-height: 48px;
 }
 @media screen and (max-width: 768px){
-    .profile-info__name{
+    .profile__name{
       font-size: calc(27px + (42 - 27) * ( (100vw - 320px) / ( 768 - 320) ));
       line-height: calc(33px + (48 - 33) * ( (100vw - 320px) / ( 768 - 320) ));
     }
   }
 @media screen and (max-width: 320px){
-  .profile-info__name{
+  .profile__name{
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;

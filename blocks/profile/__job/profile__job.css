@@ -1,4 +1,4 @@
-.profile-info__job{
+.profile__job{
   margin: 0;
   color: #fff;
   grid-column: span 2;
@@ -13,13 +13,13 @@
 
 }
 @media screen and (max-width: 768px){
-  .profile-info__job {
+  .profile__job {
     font-size: calc(14px + (18 - 14) * ( (100vw - 320px) / ( 768 - 320) ));
     line-height: calc(17px + (22 - 17) * ( (100vw - 320px) / ( 768 - 320) ));
   }
 }
 @media screen and (max-width: 320px){
-  .profile-info__job{
+  .profile__job{
       font-family: 'Inter';
       font-style: normal;
       font-weight: normal;

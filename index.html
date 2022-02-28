@@ -14,24 +14,20 @@
       </header>
       <main class="content">
         <section class="profile">
-          <div class="avatar">
-            <img
-              class="avatar__image"
-              alt="фото профиля"
-              src="images/Avatar.png"
-            />
-          </div>
-
-            <div class="profile-info">
-              <div class="profile-info__group">
-                <h2 class="profile-info__name">Жак-Ив Кусто</h2>
-                <button class="profile-info__edit-button" type="button" value="">
-                  <img src="images/edit-button.svg" alt="кнопка редактирования" />
-                </button>
-              </div>
-              <p class="profile-info__job">Исследователь океана</p>
+          <img
+            class="profile__avatar"
+            alt="фото профиля"
+            src="images/Avatar.png"
+          />
+          <div class="profile__container">
+            <div class="profile__group">
+              <h1 class="profile__name">Жак-Ив Кусто</h1>
+              <button class="profile__edit-button" type="button" value="">
+                <img src="images/edit-button.svg" alt="кнопка редактирования" />
+              </button>
             </div>
-
+            <p class="profile__job">Исследователь океана</p>
+          </div>
 
           <button class="add-button" type="button" value="">
             <img src="images/add-button.svg" alt="кнопка добавления" />
@@ -44,7 +40,7 @@
             </div>
             <div class="element__group">
               <p class="element__text">Домбай</p>
-              <div class="element__like "></div>
+              <div class="element__like"></div>
             </div>
           </div>
 
@@ -54,7 +50,7 @@
             </div>
             <div class="element__group">
               <p class="element__text">Домбай</p>
-              <div class="element__like "></div>
+              <div class="element__like"></div>
             </div>
           </div>
 
@@ -64,7 +60,7 @@
             </div>
             <div class="element__group">
               <p class="element__text">Домбай</p>
-              <div class="element__like "></div>
+              <div class="element__like"></div>
             </div>
           </div>
 
@@ -74,7 +70,7 @@
             </div>
             <div class="element__group">
               <p class="element__text">Домбай</p>
-              <div class="element__like "></div>
+              <div class="element__like"></div>
             </div>
           </div>
 
@@ -84,7 +80,7 @@
             </div>
             <div class="element__group">
               <p class="element__text">Домбай</p>
-              <div class="element__like "></div>
+              <div class="element__like"></div>
             </div>
           </div>
 
@@ -98,23 +94,36 @@
             </div>
           </div>
         </section>
-        <section class="popup popup_opened">
-          <button class="popup__toggle" type="button" value="">
-          </button>
+        <section class="popup">
+          <button class="popup__toggle" type="button" value=""></button>
           <div class="popup__container">
-
             <form class="form" action="" method="post">
               <div class="form__main-container">
-                  <h2 class="form__heading">Редактировать профиль</h2>
-                  <fieldset class="form__input-container">
-                      <input class="form__item" type="text" name="name" value="Жак-Ив Кусто">
-                      <input class="form__item" type="text" name="job" value="Исследователь океана">
-                  </fieldset>
-                  <fieldset class="form__handlers">
-                      <input class="form__button" type="submit" name="send" value="Сохранить">
-                  </fieldset>
+                <h2 class="form__heading">Редактировать профиль</h2>
+                <fieldset class="form__input-container">
+                  <input
+                    class="form__item"
+                    type="text"
+                    name="name"
+                    value="Жак-Ив Кусто"
+                  />
+                  <input
+                    class="form__item"
+                    type="text"
+                    name="job"
+                    value="Исследователь океана"
+                  />
+                </fieldset>
+                <fieldset class="form__handlers">
+                  <input
+                    class="form__button"
+                    type="submit"
+                    name="send"
+                    value="Сохранить"
+                  />
+                </fieldset>
               </div>
-          </form>
+            </form>
           </div>
         </section>
       </main>
