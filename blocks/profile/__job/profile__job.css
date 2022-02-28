@@ -2,7 +2,7 @@
   margin: 0;
   color: #fff;
   grid-column: span 2;
-  font-family: 'Inter',sans-serif;
+  font-family: 'Inter', 'Arial', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -10,7 +10,6 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-
 }
 @media screen and (max-width: 768px){
   .profile__job {
@@ -20,9 +19,6 @@
 }
 @media screen and (max-width: 320px){
   .profile__job{
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: normal;
       font-size: 14px;
       line-height: 17px;
       text-align: center;

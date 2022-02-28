@@ -4,7 +4,6 @@
   display: grid;
   grid-template-rows: max-content;
 }
-
 @media screen and (max-width: 320px){
   .form{
     padding: 0 22px;

@@ -1,12 +1,10 @@
 .profile{
   width: 100%;
-  min-height: 120px;
   margin-bottom: 50px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-
 @media screen and (max-width: 320px){
   .profile{
     flex-direction: column;

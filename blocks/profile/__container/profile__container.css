@@ -1,6 +1,5 @@
 .profile__container{
   max-width: 336px;
-  max-height: 73px;
   margin: 22px auto 25px 0;
   display: grid;
   grid-template-rows: 1fr 18px;
@@ -14,9 +13,9 @@
 @media screen and (max-width: 320px){
   .profile__container{
     width: 100%;
-    max-height: 54px;
     margin: 26px 0 36px 0;
     row-gap: 14px;
+    grid-template-rows: 26px 14px;
     grid-template-columns: 1fr;
   }
 }

@@ -1,5 +1,4 @@
 .popup__toggle{
-
   min-width: 32px;
   min-height: 32px;
   background-image: url(../../../images/Close-Icon.svg);
@@ -13,9 +12,8 @@
   margin-bottom: 8px;
 }
 .popup__toggle:hover{
-  opacity: 0.5;
+  opacity: 0.6;
 }
-
 @media screen and (max-width: 768px){
   .popup__toggle{
     margin-right: calc((100% - 430px)/2);
@@ -26,7 +24,6 @@
     margin-right: calc((100% - 282px)/2);
   }
 }
-
 @media screen and (max-width: 320px){
   .popup__toggle{
     min-width: 20px;

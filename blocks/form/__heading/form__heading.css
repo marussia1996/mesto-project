@@ -1,12 +1,11 @@
 .form__heading{
   margin: 0;
-  padding: 31px 0 51px;
+  padding: 31px 0 51px; /*такие отступы, для того чтобы высота form была корректной*/
   font-family: inherit;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
   line-height: 29px;
-
   color: #000000;
 }
 @media screen and (max-width: 768px){

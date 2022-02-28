@@ -20,7 +20,6 @@
 .form__button:hover{
   opacity: 0.8;
 }
-
 @media screen and (max-width: 320px){
   .form__button{
     min-height: 46px;

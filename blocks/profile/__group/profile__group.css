@@ -7,17 +7,15 @@
   grid-template-columns: 294px 24px;
   column-gap: 18px;
 }
-
 @media screen and (max-width: 768px){
   .profile__group{
     grid-template-columns: minmax(189px,294px) minmax(18px,24px);
     column-gap: 14px;
   }
 }
-
 @media screen and (max-width: 320px){
   .profile__group{
-    grid-template-rows: 27px;
+    grid-template-rows: 26px;
     grid-template-columns: 189px 18px;
     margin-left: 46px;
   }
