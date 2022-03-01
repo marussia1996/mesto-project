@@ -10,6 +10,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+  align-self: center;
 }
 @media screen and (max-width: 768px){
   .profile__job {
