@@ -1,5 +1,6 @@
 .header{
   width: calc(100% - 31.25vw);
+  max-width: 880px;
   min-height: 74px;
   margin: 0 15.625vw 40px;
   padding-top: 45px;
