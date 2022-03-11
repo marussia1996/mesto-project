@@ -7,6 +7,13 @@ let ClosePopupButton = FormRedact.querySelector(".popup__toggle");
 const FormElement = FormRedact.querySelector('.form');
 const FormName = FormRedact.querySelector(".form__item_info_name");
 const FormJob = FormRedact.querySelector(".form__item_info_job");
+let Elements = document.querySelector(".elements");
+
+Elements.addEventListener('click', function(e) {
+  if (!e.target.classList.contains('element__like'))         // если клик не по like - завершим выполнение
+    return;
+  e.target.classList.toggle('element__like_active');                  // если есть модификатор _active уберем его, иначе добавим
+});
 
 // Функции открытия/закрытия попап
 function OpenPopup(){
@@ -15,7 +22,6 @@ function OpenPopup(){
   FormName.value = ProfileName.textContent;
   FormJob.value = ProfileJob.textContent;
 }
-
 function ClosePopup(){
   FormRedact.classList.remove('popup_opened');
 }
