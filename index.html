@@ -42,10 +42,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -57,10 +57,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -72,10 +72,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -87,10 +87,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -102,10 +102,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -117,10 +117,10 @@
             <img
               class="element__image"
               alt="Картинка Домбая"
-              src="images/donbay.png"
+              src=""
             />
             <div class="element__group">
-              <h2 class="element__text">Домбай</h2>
+              <h2 class="element__text"></h2>
               <button
                 class="element__like"
                 type="button"
@@ -133,15 +133,16 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
-      <div class="popup popup_redact">
+      <div class="popup popup_edit">
         <button class="popup__toggle" type="button" value=""></button>
         <div class="popup__container">
-          <form class="form form_redact" name="redaction-profile">
+          <form class="form form_edit" name="edit-profile">
             <h2 class="form__heading">Редактировать профиль</h2>
             <input
               class="form__item form__item_info_name"
               type="text"
               name="name"
+              maxlength="12"
             />
             <input
               class="form__item form__item_info_job"
@@ -178,6 +179,23 @@
         </div>
       </div>
     </div>
+    <template id="elem-template">
+      <div class="element">
+        <img
+          class="element__image"
+          alt=""
+          src=""
+        />
+        <div class="element__group">
+          <h2 class="element__text"></h2>
+          <button
+            class="element__like"
+            type="button"
+            aria-label="Лайк"
+          ></button>
+        </div>
+      </div>
+    </template>
     <script src="javascript/index.js"></script>
   </body>
 </html>
