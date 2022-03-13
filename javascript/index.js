@@ -1,18 +1,19 @@
-let Profile = document.querySelector(".profile");
-let EditButton = Profile.querySelector(".profile__edit-button");
-let ProfileName = Profile.querySelector(".profile__name");
-let ProfileJob = Profile.querySelector(".profile__job");
-let FormRedact = document.querySelector(".popup");
-let ClosePopupButton = FormRedact.querySelector(".popup__toggle");
+const Profile = document.querySelector(".profile");
+const EditButton = Profile.querySelector(".profile__edit-button");
+const ProfileName = Profile.querySelector(".profile__name");
+const ProfileJob = Profile.querySelector(".profile__job");
+const FormRedact = document.querySelector(".popup");
+const ClosePopupButton = FormRedact.querySelector(".popup__toggle");
 const FormElement = FormRedact.querySelector('.form');
 const FormName = FormRedact.querySelector(".form__item_info_name");
 const FormJob = FormRedact.querySelector(".form__item_info_job");
-let Elements = document.querySelector(".elements");
+const Elements = document.querySelector(".elements");
 
 Elements.addEventListener('click', function(e) {
-  if (!e.target.classList.contains('element__like'))         // если клик не по like - завершим выполнение
-    return;
-  e.target.classList.toggle('element__like_active');                  // если есть модификатор _active уберем его, иначе добавим
+  if (e.target.classList.contains('element__like'))
+  {// если клик по like
+    e.target.classList.toggle('element__like_active');
+  } // если есть модификатор _active уберем его, иначе добавим
 });
 
 // Функции открытия/закрытия попап
