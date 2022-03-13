@@ -8,6 +8,38 @@ const FormElement = FormRedact.querySelector('.form');
 const FormName = FormRedact.querySelector(".form__item_info_name");
 const FormJob = FormRedact.querySelector(".form__item_info_job");
 const Elements = document.querySelector(".elements");
+const Element = Elements.querySelectorAll('.element');
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+  ];
+  for(let i = 0; i<Element.length;i++){
+    Element[i].querySelector('.element__image').src = initialCards[i].link;
+    Element[i].querySelector('.element__text').textContent = initialCards[i].name;
+  }
+
 
 Elements.addEventListener('click', function(e) {
   if (e.target.classList.contains('element__like'))
