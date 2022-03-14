@@ -52,16 +52,22 @@ function addElem(link, name) {
   element.querySelector(".element__image").alt = name;
   Elements.prepend(element);
 }
+const deleteButton = Elements.querySelectorAll(".element__delete ");
 for (let i = 0; i < Element.length; i++) {
   Element[i].querySelector(".element__image").src = initialCards[i].link;
   Element[i].querySelector(".element__text").textContent = initialCards[i].name;
 }
-
 Elements.addEventListener("click", function (e) {
   if (e.target.classList.contains("element__like")) {
     // если клик по like
     e.target.classList.toggle("element__like_active");
   } // если есть модификатор _active уберем его, иначе добавим
+});
+Elements.addEventListener("click", function (e) {
+  if (e.target.classList.contains("element__delete")) {
+    console.log("нажали на кнопку");
+    e.target.parentNode.remove();
+  }
 });
 
 // Функции открытия/закрытия попап
