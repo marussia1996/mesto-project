@@ -6,14 +6,13 @@
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
-  margin: 0;
   padding: 0;
   border: 0;
   background-color: transparent;
   grid-area: 1 / 1 / 2 / 1;
   justify-self: end;
   margin: 20px 20px auto auto;
-  z-index: 1;
+  z-index: 0;
 }
 .element__delete:hover {
   opacity: 0.6;
