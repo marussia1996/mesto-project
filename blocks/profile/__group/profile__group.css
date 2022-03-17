@@ -15,7 +15,7 @@
 }
 @media screen and (max-width: 320px) {
   .profile__group {
-    grid-template-rows: 26px;
+    grid-template-rows: 33px;
     grid-template-columns: 189px 18px;
     margin-left: 46px;
   }
