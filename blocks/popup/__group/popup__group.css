@@ -1,0 +1,7 @@
+.popup__group {
+  position: relative;
+  background-color: transparent;
+  display: grid;
+  grid-template-rows: max-content;
+  row-gap: 7px;
+}

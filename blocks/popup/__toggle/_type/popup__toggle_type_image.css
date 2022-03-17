@@ -1,0 +1,11 @@
+@media screen and (max-width: 480px) {
+  .popup__toggle_type_image {
+    margin-right: calc((100% - 320px) / 2);
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .popup__toggle_type_image {
+    margin-right: calc((100% - 240px) / 2);
+  }
+}

@@ -4,13 +4,13 @@ const AddButton = Profile.querySelector(".profile__add-button");
 const ProfileName = Profile.querySelector(".profile__name");
 const ProfileJob = Profile.querySelector(".profile__job");
 
-const PopupEdit = document.querySelector(".popup_edit");
-const FormEdit = PopupEdit.querySelector(".form_edit");
+const PopupEdit = document.querySelector(".popup_type_edit");
+const FormEdit = PopupEdit.querySelector(".form_type_edit");
 const FormName = FormEdit.querySelector(".form__item_info_name");
 const FormJob = FormEdit.querySelector(".form__item_info_job");
 
-const PopupAdd = document.querySelector(".popup_add");
-const FormAdd = PopupAdd.querySelector(".form_add");
+const PopupAdd = document.querySelector(".popup_type_add");
+const FormAdd = PopupAdd.querySelector(".form_type_add");
 const FormMesto = FormAdd.querySelector(".form__item_info_mesto");
 const FormLink = FormAdd.querySelector(".form__item_info_link");
 
