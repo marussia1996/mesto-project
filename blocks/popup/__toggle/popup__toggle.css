@@ -1,31 +1,27 @@
-.popup__toggle{
+.popup__toggle {
   min-width: 32px;
   min-height: 32px;
   background-image: url(../../../images/Close-Icon.svg);
   background-size: cover;
   border: 0;
   padding: 0;
-  background-color: rgba(0,0,0,0);
+  background-color: rgba(0, 0, 0, 0);
   align-self: flex-end;
   cursor: pointer;
-  margin-right: calc(((100% - 430px)/2) - 40px);
+  margin-right: -40px;
   margin-bottom: 8px;
 }
-.popup__toggle:hover{
+.popup__toggle:hover {
   opacity: 0.6;
 }
-@media screen and (max-width: 768px){
-  .popup__toggle{
-    margin-right: calc((100% - 430px)/2);
+
+@media screen and (max-width: 480px) {
+  .popup__toggle {
+    margin-right: 0;
   }
 }
-@media screen and (max-width: 480px){
-  .popup__toggle{
-    margin-right: calc((100% - 282px)/2);
-  }
-}
-@media screen and (max-width: 320px){
-  .popup__toggle{
+@media screen and (max-width: 320px) {
+  .popup__toggle {
     min-width: 20px;
     min-height: 20px;
     margin-bottom: 16px;

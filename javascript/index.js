@@ -14,8 +14,13 @@ const FormAdd = PopupAdd.querySelector(".form_type_add");
 const FormMesto = FormAdd.querySelector(".form__item_info_mesto");
 const FormLink = FormAdd.querySelector(".form__item_info_link");
 
+const PopupImg = document.querySelector(".popup_type_image");
+const Image = PopupImg.querySelector(".popup__image");
+const Signature = PopupImg.querySelector(".popup__signature");
+
 const ClosePopupEditButton = PopupEdit.querySelector(".popup__toggle");
 const ClosePopupAddButton = PopupAdd.querySelector(".popup__toggle");
+const ClosePopupImgButton = PopupImg.querySelector(".popup__toggle");
 const Elements = document.querySelector(".elements");
 const Element = Elements.querySelectorAll(".element");
 const initialCards = [
@@ -65,11 +70,20 @@ Elements.addEventListener("click", function (e) {
 });
 Elements.addEventListener("click", function (e) {
   if (e.target.classList.contains("element__delete")) {
-    console.log("нажали на кнопку");
     e.target.parentNode.remove();
   }
 });
-
+Elements.addEventListener("click", function (e) {
+  if (e.target.classList.contains("element__image")) {
+    OpenPopupImg();
+    Image.src = e.target.src;
+    let parentElem = e.target.parentNode;
+    let text = parentElem
+      .querySelector(".element__group")
+      .querySelector(".element__text");
+    Signature.textContent = text.textContent;
+  }
+});
 // Функции открытия/закрытия попап
 function OpenPopupEdit() {
   PopupEdit.classList.add("popup_opened");
@@ -80,9 +94,13 @@ function OpenPopupEdit() {
 function OpenPopupAdd() {
   PopupAdd.classList.add("popup_opened");
 }
+function OpenPopupImg() {
+  PopupImg.classList.add("popup_opened");
+}
 function ClosePopup() {
   PopupEdit.classList.remove("popup_opened");
   PopupAdd.classList.remove("popup_opened");
+  PopupImg.classList.remove("popup_opened");
 }
 
 //Функция отправки формы
@@ -111,6 +129,7 @@ EditButton.addEventListener("click", OpenPopupEdit);
 AddButton.addEventListener("click", OpenPopupAdd);
 ClosePopupEditButton.addEventListener("click", ClosePopup);
 ClosePopupAddButton.addEventListener("click", ClosePopup);
+ClosePopupImgButton.addEventListener("click", ClosePopup);
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 FormEdit.addEventListener("submit", formSubmitHandlerEdit);
 FormAdd.addEventListener("submit", formSubmitHandlerAdd);
