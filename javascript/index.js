@@ -51,29 +51,45 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
-//Добавление элемента
-function addElem(link, name) {
-  const elemTemplate = document.querySelector("#elem-template").content;
-  const element = elemTemplate.querySelector(".element").cloneNode(true);
-  element.querySelector(".element__text").textContent = name;
-  element.querySelector(".element__image").src = link;
-  element.querySelector(".element__image").alt = name;
-  elements.prepend(element);
+//Функция передачи параметров для попапа с картинкой
+function handleCardClick(name, link) {
+  openPopup(popupImg);
+  image.src = link;
+  signature.textContent = name;
 }
-//Создание элемента
-function createElem(link, name) {
+//Создание карточки
+function createCard(link, name) {
   const elemTemplate = document.querySelector("#elem-template").content;
   const element = elemTemplate.querySelector(".element").cloneNode(true);
+  //Событие на кнопку лайка
+  element
+    .querySelector(".element__like")
+    .addEventListener("click", function () {
+      this.classList.toggle("element__like_active");
+    });
+  //Событие на кнопку удаления
+  element
+    .querySelector(".element__delete")
+    .addEventListener("click", function () {
+      this.parentNode.remove();
+    });
   element.querySelector(".element__text").textContent = name;
   element.querySelector(".element__image").src = link;
   element.querySelector(".element__image").alt = name;
-  elements.append(element);
+  //Событие при нажатии на картинку
+  element
+    .querySelector(".element__image")
+    .addEventListener("click", () => handleCardClick(name, link));
+  return element;
+}
+//Добавление карточки
+function addCard(link, name) {
+  elements.prepend(createCard(link, name));
 }
 //Заполнение страницы 6 карточками
-for (let i = 0; i < 6; i++) {
-  createElem(initialCards[i].link, initialCards[i].name);
+for (let i = 5; i >= 0; i--) {
+  addCard(initialCards[i].link, initialCards[i].name);
 }
-
 // Функция для полей при открытии формы редактирования информации о пользователе
 function openPropfilePopup() {
   formName.value = profileName.textContent;
@@ -118,35 +134,11 @@ function formSubmitHandlerAdd(evt) {
   evt.preventDefault();
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
-  addElem(linkInput, mestoInput);
+  addCard(linkInput, mestoInput);
   closePopup(popupAdd);
   formMesto.value = "";
   formLink.value = "";
 }
-
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formEdit.addEventListener("submit", formSubmitHandlerEdit);
 formAdd.addEventListener("submit", formSubmitHandlerAdd);
-//Функции обработки событий для элементов
-elements.addEventListener("click", function (e) {
-  if (e.target.classList.contains("element__like")) {
-    // если клик по like
-    e.target.classList.toggle("element__like_active");
-  } // если есть модификатор _active уберем его, иначе добавим
-});
-elements.addEventListener("click", function (e) {
-  if (e.target.classList.contains("element__delete")) {
-    e.target.parentNode.remove();
-  }
-});
-elements.addEventListener("click", function (e) {
-  if (e.target.classList.contains("element__image")) {
-    openPopup(popupImg);
-    image.src = e.target.src;
-    const parentElem = e.target.parentNode;
-    const text = parentElem
-      .querySelector(".element__group")
-      .querySelector(".element__text");
-    signature.textContent = text.textContent;
-  }
-});
