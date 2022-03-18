@@ -73,28 +73,36 @@ function createElem(link, name) {
 for (let i = 0; i < 6; i++) {
   createElem(initialCards[i].link, initialCards[i].name);
 }
-// Функции открытия/закрытия попап
-function openPopupEdit() {
-  popupEdit.classList.add("popup_opened");
-  // для полей при открытии формы редактирования информации о пользователе
+
+// Функция для полей при открытии формы редактирования информации о пользователе
+function openPropfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
 }
-function openPopupAdd() {
-  popupAdd.classList.add("popup_opened");
+// Функции открытия/закрытия попап
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
 }
-function openPopupImg() {
-  popupImg.classList.add("popup_opened");
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
 }
-function closePopupEdit() {
-  popupEdit.classList.remove("popup_opened");
-}
-function closePopupAdd() {
-  popupAdd.classList.remove("popup_opened");
-}
-function closePopupImg() {
-  popupImg.classList.remove("popup_opened");
-}
+// События при нажатии кнопок
+buttonEdit.addEventListener("click", function () {
+  openPopup(popupEdit);
+  openPropfilePopup();
+});
+buttonAdd.addEventListener("click", function () {
+  openPopup(popupAdd);
+});
+buttonClosePopupEdit.addEventListener("click", function () {
+  closePopup(popupEdit);
+});
+buttonClosePopupAdd.addEventListener("click", function () {
+  closePopup(popupAdd);
+});
+buttonClosePopupImg.addEventListener("click", function () {
+  closePopup(popupImg);
+});
 //Функции отправки формы
 function formSubmitHandlerEdit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
@@ -104,23 +112,18 @@ function formSubmitHandlerEdit(evt) {
   // Выберите элементы, куда должны быть вставлены значения полей && Вставьте новые значения с помощью textContent
   profileName.textContent = nameInput;
   profileJob.textContent = jobInput;
-  closePopupEdit();
+  closePopup(popupEdit);
 }
 function formSubmitHandlerAdd(evt) {
   evt.preventDefault();
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   addElem(linkInput, mestoInput);
-  closePopupAdd();
+  closePopup(popupAdd);
   formMesto.value = "";
   formLink.value = "";
 }
-// События при нажатии кнопок
-buttonEdit.addEventListener("click", openPopupEdit);
-buttonAdd.addEventListener("click", openPopupAdd);
-buttonClosePopupEdit.addEventListener("click", closePopupEdit);
-buttonClosePopupAdd.addEventListener("click", closePopupAdd);
-buttonClosePopupImg.addEventListener("click", closePopupImg);
+
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formEdit.addEventListener("submit", formSubmitHandlerEdit);
 formAdd.addEventListener("submit", formSubmitHandlerAdd);
@@ -138,7 +141,7 @@ elements.addEventListener("click", function (e) {
 });
 elements.addEventListener("click", function (e) {
   if (e.target.classList.contains("element__image")) {
-    openPopupImg();
+    openPopup(popupImg);
     image.src = e.target.src;
     const parentElem = e.target.parentNode;
     const text = parentElem
