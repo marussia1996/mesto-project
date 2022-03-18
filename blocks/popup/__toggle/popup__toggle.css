@@ -18,6 +18,9 @@
 @media screen and (max-width: 480px) {
   .popup__toggle {
     margin-right: 0;
+    min-width: 20px;
+    min-height: 20px;
+    margin-bottom: 16px;
   }
 }
 @media screen and (max-width: 320px) {
