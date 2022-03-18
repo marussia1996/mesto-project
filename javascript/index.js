@@ -1,7 +1,7 @@
 //Переменные для работы с профилем
 const profile = document.querySelector(".profile");
-const editButton = profile.querySelector(".profile__edit-button");
-const addButton = profile.querySelector(".profile__add-button");
+const buttonEdit = profile.querySelector(".profile__edit-button");
+const buttonAdd = profile.querySelector(".profile__add-button");
 const profileName = profile.querySelector(".profile__name");
 const profileJob = profile.querySelector(".profile__job");
 //Переменные для работы с формой редактирований
@@ -19,12 +19,12 @@ const popupImg = document.querySelector(".popup_type_image");
 const image = popupImg.querySelector(".popup__image");
 const signature = popupImg.querySelector(".popup__signature");
 //Переменные для кнопок закрытия форм
-const closePopupEditButton = popupEdit.querySelector(".popup__toggle");
-const closePopupAddButton = popupAdd.querySelector(".popup__toggle");
-const closePopupImgButton = popupImg.querySelector(".popup__toggle");
+const buttonClosePopupEdit = popupEdit.querySelector(".popup__toggle");
+const buttonClosePopupAdd = popupAdd.querySelector(".popup__toggle");
+const buttonClosePopupImg = popupImg.querySelector(".popup__toggle");
 //Переменные для работы с элементами
 const elements = document.querySelector(".elements");
-//Массив истодных элементов
+//Массив исходных элементов
 const initialCards = [
   {
     name: "Архыз",
@@ -99,8 +99,8 @@ function closePopupImg() {
 function formSubmitHandlerEdit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   // Получите значение полей jobInput и nameInput из свойства value
-  let nameInput = formName.value;
-  let jobInput = formJob.value;
+  const nameInput = formName.value;
+  const jobInput = formJob.value;
   // Выберите элементы, куда должны быть вставлены значения полей && Вставьте новые значения с помощью textContent
   profileName.textContent = nameInput;
   profileJob.textContent = jobInput;
@@ -108,19 +108,19 @@ function formSubmitHandlerEdit(evt) {
 }
 function formSubmitHandlerAdd(evt) {
   evt.preventDefault();
-  let mestoInput = formMesto.value;
-  let linkInput = formLink.value;
+  const mestoInput = formMesto.value;
+  const linkInput = formLink.value;
   addElem(linkInput, mestoInput);
   closePopupAdd();
   formMesto.value = "";
   formLink.value = "";
 }
 // События при нажатии кнопок
-editButton.addEventListener("click", openPopupEdit);
-addButton.addEventListener("click", openPopupAdd);
-closePopupEditButton.addEventListener("click", closePopupEdit);
-closePopupAddButton.addEventListener("click", closePopupAdd);
-closePopupImgButton.addEventListener("click", closePopupImg);
+buttonEdit.addEventListener("click", openPopupEdit);
+buttonAdd.addEventListener("click", openPopupAdd);
+buttonClosePopupEdit.addEventListener("click", closePopupEdit);
+buttonClosePopupAdd.addEventListener("click", closePopupAdd);
+buttonClosePopupImg.addEventListener("click", closePopupImg);
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formEdit.addEventListener("submit", formSubmitHandlerEdit);
 formAdd.addEventListener("submit", formSubmitHandlerAdd);
@@ -140,8 +140,8 @@ elements.addEventListener("click", function (e) {
   if (e.target.classList.contains("element__image")) {
     openPopupImg();
     image.src = e.target.src;
-    let parentElem = e.target.parentNode;
-    let text = parentElem
+    const parentElem = e.target.parentNode;
+    const text = parentElem
       .querySelector(".element__group")
       .querySelector(".element__text");
     signature.textContent = text.textContent;
