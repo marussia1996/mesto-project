@@ -55,11 +55,12 @@ const initialCards = [
 function handleCardClick(name, link) {
   openPopup(popupImg);
   image.src = link;
+  image.alt = name;
   signature.textContent = name;
 }
 //Создание карточки
+const elemTemplate = document.querySelector("#elem-template").content;
 function createCard(link, name) {
-  const elemTemplate = document.querySelector("#elem-template").content;
   const element = elemTemplate.querySelector(".element").cloneNode(true);
   //Событие на кнопку лайка
   element
@@ -71,7 +72,7 @@ function createCard(link, name) {
   element
     .querySelector(".element__delete")
     .addEventListener("click", function () {
-      this.parentNode.remove();
+      this.closest(".element").remove();
     });
   element.querySelector(".element__text").textContent = name;
   element.querySelector(".element__image").src = link;
@@ -104,8 +105,8 @@ function closePopup(popup) {
 }
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
-  openPopup(popupEdit);
   openPropfilePopup();
+  openPopup(popupEdit);
 });
 buttonAdd.addEventListener("click", function () {
   openPopup(popupAdd);
@@ -136,8 +137,7 @@ function formSubmitHandlerAdd(evt) {
   const linkInput = formLink.value;
   addCard(linkInput, mestoInput);
   closePopup(popupAdd);
-  formMesto.value = "";
-  formLink.value = "";
+  formAdd.reset();
 }
 // Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
 formEdit.addEventListener("submit", formSubmitHandlerEdit);
