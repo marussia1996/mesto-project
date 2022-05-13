@@ -120,6 +120,38 @@ buttonClosePopupAdd.addEventListener("click", function () {
 buttonClosePopupImg.addEventListener("click", function () {
   closePopup(popupImg);
 });
+//Закрытие попап по ESC
+document.addEventListener("keydown", function (evt) {
+  if (evt.key === "Escape") {
+    closePopup(popupEdit);
+  }
+});
+document.addEventListener("keydown", function (evt) {
+  if (evt.key === "Escape") {
+    closePopup(popupAdd);
+  }
+});
+document.addEventListener("keydown", function (evt) {
+  if (evt.key === "Escape") {
+    closePopup(popupImg);
+  }
+});
+//Закрытие попап по нажатию внешней области
+popupEdit.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("popup_type_edit")) {
+    closePopup(popupEdit);
+  }
+});
+popupAdd.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("popup_type_add")) {
+    closePopup(popupAdd);
+  }
+});
+popupImg.addEventListener("click", function (evt) {
+  if (evt.target.classList.contains("popup_type_image")) {
+    closePopup(popupImg);
+  }
+});
 //Функции отправки формы
 function formSubmitHandlerEdit(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
