@@ -152,9 +152,9 @@ popupImg.addEventListener("click", function (evt) {
     closePopup(popupImg);
   }
 });
+
 //Функции отправки формы
-function formSubmitHandlerEdit(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+function formSubmitHandlerEdit() {
   // Получите значение полей jobInput и nameInput из свойства value
   const nameInput = formName.value;
   const jobInput = formJob.value;
@@ -163,14 +163,77 @@ function formSubmitHandlerEdit(evt) {
   profileJob.textContent = jobInput;
   closePopup(popupEdit);
 }
-function formSubmitHandlerAdd(evt) {
-  evt.preventDefault();
+function formSubmitHandlerAdd() {
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   addCard(linkInput, mestoInput);
   closePopup(popupAdd);
   formAdd.reset();
 }
-// Прикрепляем обработчик к форме: он будет следить за событием “submit” - «отправка»
-formEdit.addEventListener("submit", formSubmitHandlerEdit);
-formAdd.addEventListener("submit", formSubmitHandlerAdd);
+//Показ ошибки
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.add("form__item_type_error");
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add("form__item-error_active");
+};
+//Скрытие ошибки
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+  inputElement.classList.remove("form__item_type_error");
+  errorElement.classList.remove("form__item-error_active");
+  errorElement.textContent = "";
+};
+//Проверка валидности поля
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+};
+//Добавление обработчика на поля
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(".form__item"));
+  const buttonElement = formElement.querySelector(".form__button");
+  if (!formElement.classList.contains("form_type_edit")) {
+    toggleButtonState(inputList, buttonElement);
+  }
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener("input", function () {
+      toggleButtonState(inputList, buttonElement);
+      checkInputValidity(formElement, inputElement);
+    });
+  });
+};
+//Для каждой формы добавление валидации полей и функций отправки
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll(".form"));
+  formList.forEach((formElement) => {
+    formElement.addEventListener("submit", function (evt) {
+      evt.preventDefault();
+      if (evt.target.classList.contains("form_type_edit")) {
+        formSubmitHandlerEdit();
+      }
+      if (evt.target.classList.contains("form_type_add")) {
+        formSubmitHandlerAdd();
+      }
+    });
+    setEventListeners(formElement);
+  });
+};
+//Проверка валидности всех полей
+const hasInvalidInput = (inputList) => {
+  return inputList.some((input) => {
+    return !input.validity.valid;
+  });
+};
+//Состояние кнопки
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidInput(inputList)) {
+    buttonElement.classList.add("form__button_inactive");
+  } else {
+    buttonElement.classList.remove("form__button_inactive");
+  }
+};
+enableValidation();
