@@ -46,18 +46,34 @@
         <div class="popup__container">
           <button class="popup__toggle" type="button" value=""></button>
           <div class="popup__form">
-            <form class="form form_type_edit" name="edit-profile">
+            <form class="form form_type_edit" name="edit-profile" novalidate>
               <h2 class="form__heading">Редактировать профиль</h2>
-              <input
-                class="form__item form__item_info_name"
-                type="text"
-                name="name"
-              />
-              <input
-                class="form__item form__item_info_job"
-                type="text"
-                name="job"
-              />
+              <label class="form__label">
+                <input
+                  class="form__item form__item_info_name"
+                  id="name-item"
+                  placeholder="Имя"
+                  type="text"
+                  name="name"
+                  required
+                  minlength="2"
+                  maxlength="40"
+                />
+                <span class="form__item-error name-item-error"></span>
+              </label>
+              <label class="form__label">
+                <input
+                  class="form__item form__item_info_job"
+                  id="job-item"
+                  type="text"
+                  placeholder="О себе"
+                  name="job"
+                  required
+                  minlength="2"
+                  maxlength="200"
+                />
+                <span class="form__item-error job-item-error"></span>
+              </label>
               <button class="form__button" type="submit" name="send">
                 Сохранить
               </button>
@@ -69,20 +85,32 @@
         <div class="popup__container">
           <button class="popup__toggle" type="button" value=""></button>
           <div class="popup__form">
-            <form class="form form_type_add" name="add-mesto">
+            <form class="form form_type_add" name="add-mesto" novalidate>
               <h2 class="form__heading">Новое место</h2>
-              <input
-                class="form__item form__item_info_mesto"
-                type="text"
-                name="name"
-                placeholder="Название"
-              />
-              <input
-                class="form__item form__item_info_link"
-                type="text"
-                name="link"
-                placeholder="Ссылка на картинку"
-              />
+              <label class="form__label">
+                <input
+                  class="form__item form__item_info_mesto"
+                  id="mesto-item"
+                  type="text"
+                  name="name"
+                  placeholder="Название"
+                  required
+                  minlength="2"
+                  maxlength="30"
+                />
+                <span class="form__item-error mesto-item-error"></span>
+              </label>
+              <label class="form__label">
+                <input
+                  class="form__item form__item_info_link"
+                  id="link-item"
+                  type="url"
+                  name="link"
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="form__item-error link-item-error"></span>
+              </label>
               <button class="form__button" type="submit" name="send">
                 Создать
               </button>
