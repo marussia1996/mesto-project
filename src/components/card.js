@@ -1,33 +1,6 @@
 import { handleCardClick } from "./modal.js";
 //Переменные для работы с элементами
 const elements = document.querySelector(".elements");
-//Массив исходных элементов
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 //Создание карточки
 const elemTemplate = document.querySelector("#elem-template").content;
 function createCard(link, name) {
@@ -53,8 +26,5 @@ function createCard(link, name) {
     .addEventListener("click", () => handleCardClick(name, link));
   return element;
 }
-//Добавление карточки
-function addCard(link, name) {
-  elements.prepend(createCard(link, name));
-}
-export { initialCards, addCard };
+
+export { createCard, elements };

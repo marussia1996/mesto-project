@@ -1,4 +1,3 @@
-import { formSubmitHandlerEdit, formSubmitHandlerAdd } from "./modal.js";
 //Показ ошибки
 const showInputError = (formElement, inputElement, errorMessage, config) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -48,12 +47,6 @@ export const enableValidation = (config) => {
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", function (evt) {
       evt.preventDefault();
-      if (evt.target.classList.contains("form_type_edit")) {
-        formSubmitHandlerEdit();
-      }
-      if (evt.target.classList.contains("form_type_add")) {
-        formSubmitHandlerAdd();
-      }
     });
     setEventListeners(formElement, config);
   });
