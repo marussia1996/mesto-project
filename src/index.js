@@ -1,5 +1,6 @@
-import { initialCards as cards, addCard } from "./card.js";
-import { enableValidation } from "./validate.js";
+import "./pages/index.css";
+import { initialCards as cards, addCard } from "./components/card.js";
+import { enableValidation } from "./components/validate.js";
 //Заполнение страницы 6 карточками
 for (let i = 5; i >= 0; i--) {
   addCard(cards[i].link, cards[i].name);
