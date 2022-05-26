@@ -1,4 +1,5 @@
 import { openPopup, closePopup, addCard } from "./utils.js";
+import { toggleButtonState } from "./validate.js";
 //Переменные для работы с профилем
 export const profile = document.querySelector(".profile");
 const profileName = profile.querySelector(".profile__name");
@@ -43,9 +44,11 @@ export function handleAddCardFormSubmit() {
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   addCard(linkInput, mestoInput);
-  popupAdd
-    .querySelector(".form__button")
-    .classList.add("form__button_inactive");
+  const inputList = Array.from(formAdd.querySelectorAll(".form__item"));
+  const buttonElement = formAdd.querySelector(".form__button");
   closePopup(popupAdd);
   formAdd.reset();
+  toggleButtonState(inputList, buttonElement, {
+    inactiveButtonClass: "form__button_inactive",
+  });
 }
