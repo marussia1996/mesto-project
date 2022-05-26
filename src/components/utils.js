@@ -19,14 +19,14 @@ function addCard(link, name) {
 // Функции открытия/закрытия попап
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", closePopupbyEsc);
+  document.addEventListener("keydown", closePopupByEsc);
 }
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", closePopupbyEsc);
+  document.removeEventListener("keydown", closePopupByEsc);
 }
 //Функция обработки нажатия на ESC
-function closePopupbyEsc(evt) {
+function closePopupByEsc(evt) {
   if (evt.key === "Escape") {
     closePopup(document.querySelector(".popup_opened"));
   }
