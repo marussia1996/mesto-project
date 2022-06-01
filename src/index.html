@@ -125,6 +125,17 @@
         </div>
       </div>
     </div>
+    <template id="popupDel-template">
+      <div class="popup popup_opacity_medium popup_type_delete">
+        <div class="popup__container">
+          <button class="popup__toggle" type="button" value=""></button>
+          <div class="popup__question">
+            <h2 class="popup__title">Вы уверены?</h2>
+            <button class="popup__button">Да</button>
+          </div>
+        </div>
+      </div>
+    </template>
     <template id="elem-template">
       <div class="element">
         <button
@@ -135,11 +146,14 @@
         <img class="element__image" alt="" src="" />
         <div class="element__group">
           <h2 class="element__text"></h2>
-          <button
-            class="element__like"
-            type="button"
-            aria-label="Лайк"
-          ></button>
+          <div class="element__group-likes">
+            <button
+              class="element__like"
+              type="button"
+              aria-label="Лайк"
+            ></button>
+            <span class="element__counter-likes">0</span>
+          </div>
         </div>
       </div>
     </template>

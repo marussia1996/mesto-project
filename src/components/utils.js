@@ -5,6 +5,7 @@ import {
   popupEdit,
   popupAdd,
   popupImg,
+  deletePopup,
 } from "./modal.js";
 const buttonEdit = profile.querySelector(".profile__edit-button");
 const buttonAdd = profile.querySelector(".profile__add-button");
@@ -13,8 +14,8 @@ const buttonClosePopupEdit = popupEdit.querySelector(".popup__toggle");
 const buttonClosePopupAdd = popupAdd.querySelector(".popup__toggle");
 const buttonClosePopupImg = popupImg.querySelector(".popup__toggle");
 //Добавление карточки
-function addCard(link, name) {
-  elements.prepend(createCard(link, name));
+function addCard(cardData, profileId) {
+  elements.prepend(createCard(cardData, profileId));
 }
 // Функции открытия/закрытия попап
 function openPopup(popup) {
@@ -28,7 +29,16 @@ function closePopup(popup) {
 //Функция обработки нажатия на ESC
 function closePopupByEsc(evt) {
   if (evt.key === "Escape") {
-    closePopup(document.querySelector(".popup_opened"));
+    if (
+      document
+        .querySelector(".popup_opened")
+        .classList.contains("popup_type_delete")
+    ) {
+      closePopup(document.querySelector(".popup_opened"));
+      setTimeout(deletePopup, 1000);
+    } else {
+      closePopup(document.querySelector(".popup_opened"));
+    }
   }
 }
 // События при нажатии кнопок
