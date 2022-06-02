@@ -5,14 +5,21 @@ import {
   popupEdit,
   popupAdd,
   popupImg,
+  popupChangeAvatar,
   deletePopup,
 } from "./modal.js";
+//Кнопки для открытия попапов
 const buttonEdit = profile.querySelector(".profile__edit-button");
 const buttonAdd = profile.querySelector(".profile__add-button");
-// //Переменные для кнопок закрытия форм
+const buttonChangeAvatar = profile.querySelector(
+  ".profile__button-avatar-change"
+);
+//Переменные для кнопок закрытия форм
 const buttonClosePopupEdit = popupEdit.querySelector(".popup__toggle");
 const buttonClosePopupAdd = popupAdd.querySelector(".popup__toggle");
 const buttonClosePopupImg = popupImg.querySelector(".popup__toggle");
+const buttonClosePopupChange =
+  popupChangeAvatar.querySelector(".popup__toggle");
 //Добавление карточки
 function addCard(cardData, profileId) {
   elements.prepend(createCard(cardData, profileId));
@@ -49,6 +56,9 @@ buttonEdit.addEventListener("click", function () {
 buttonAdd.addEventListener("click", function () {
   openPopup(popupAdd);
 });
+buttonChangeAvatar.addEventListener("click", function () {
+  openPopup(popupChangeAvatar);
+});
 buttonClosePopupEdit.addEventListener("click", function () {
   closePopup(popupEdit);
 });
@@ -57,6 +67,9 @@ buttonClosePopupAdd.addEventListener("click", function () {
 });
 buttonClosePopupImg.addEventListener("click", function () {
   closePopup(popupImg);
+});
+buttonClosePopupChange.addEventListener("click", function () {
+  closePopup(popupChangeAvatar);
 });
 //Массив всех форм
 const popups = Array.from(document.querySelectorAll(".popup"));
@@ -68,4 +81,20 @@ popups.forEach((popup) => {
     }
   });
 });
+//Функция для показа пользователю, что данные грузятся
+export function renderLoadingForButton(isLoading, button) {
+  if (isLoading) {
+    if (button.textContent === "Сохранить") {
+      button.textContent = "Сохранение...";
+    } else {
+      button.textContent = "Создание...";
+    }
+  } else {
+    if (button.textContent === "Сохранение...") {
+      button.textContent = "Сохранить";
+    } else {
+      button.textContent = "Создать";
+    }
+  }
+}
 export { openPopup, closePopup, addCard };

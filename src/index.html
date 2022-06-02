@@ -14,8 +14,9 @@
       </header>
       <main class="content">
         <section class="profile">
-          <img class="profile__avatar" alt="фото профиля"
-          src=<%=require("./images/Avatar.png")%> />
+          <div class="profile__avatar">
+            <button class="profile__button-avatar-change"></button>
+          </div>
           <div class="profile__container">
             <div class="profile__group">
               <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -110,6 +111,34 @@
               </label>
               <button class="form__button" type="submit" name="send">
                 Создать
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="popup popup_opacity_medium popup_type_change-avatar">
+        <div class="popup__container">
+          <button class="popup__toggle" type="button" value=""></button>
+          <div class="popup__form">
+            <form
+              class="form form_type_change-avatar"
+              name="change-avatar"
+              novalidate
+            >
+              <h2 class="form__heading">Обновить аватар</h2>
+              <label class="form__label">
+                <input
+                  class="form__item form__item_profile_change"
+                  id="profile-change"
+                  type="url"
+                  name="link"
+                  placeholder="Ссылка на картинку"
+                  required
+                />
+                <span class="form__item-error profile-change-error"></span>
+              </label>
+              <button class="form__button" type="submit" name="send">
+                Сохранить
               </button>
             </form>
           </div>

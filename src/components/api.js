@@ -59,3 +59,12 @@ export const rejectLike = (idCard) => {
     headers: apiConfig.headers,
   }).then(getResponse);
 };
+export const changeAvatar = (linkAvatar) => {
+  return fetch(`${apiConfig.baseUrl}/users/me/avatar`, {
+    method: "PATCH",
+    headers: apiConfig.headers,
+    body: JSON.stringify({
+      avatar: linkAvatar,
+    }),
+  }).then(getResponse);
+};

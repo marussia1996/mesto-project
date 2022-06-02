@@ -1,6 +1,5 @@
 import { getInfoProfileFromServer } from "./api.js";
-import { profileName, profileJob } from "./modal.js";
-const profileAvatar = document.querySelector(".profile__avatar");
+import { profileName, profileJob, profileAvatar } from "./modal.js";
 //Получение данных о пользователе
 export const getInfoProfile = () => {
   return getInfoProfileFromServer()
@@ -13,6 +12,7 @@ export const getInfoProfile = () => {
       };
     })
     .catch((err) => {
+      console.log(`Не удалось получить данные пользователя: ${err}`);
       return {
         profileId: "",
         profileName: err,
@@ -25,5 +25,5 @@ export const getInfoProfile = () => {
 export const setProfileInfoOnPage = (profileData) => {
   profileName.textContent = profileData.profileName;
   profileJob.textContent = profileData.profileJob;
-  profileAvatar.src = profileData.profileAvatar;
+  profileAvatar.style.backgroundImage = `url(${profileData.profileAvatar})`;
 };

@@ -22,19 +22,23 @@ function createCard(cardData, profileId) {
     .querySelector(".element__like")
     .addEventListener("click", function () {
       if (this.classList.contains("element__like_active")) {
-        rejectLike(cardData._id).then((card) => {
-          this.classList.remove("element__like_active");
-          cardData.likes.length = card.likes.length;
-          element.querySelector(".element__counter-likes").textContent =
-            cardData.likes.length;
-        });
+        rejectLike(cardData._id)
+          .then((card) => {
+            this.classList.remove("element__like_active");
+            cardData.likes.length = card.likes.length;
+            element.querySelector(".element__counter-likes").textContent =
+              cardData.likes.length;
+          })
+          .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
       } else {
-        setLike(cardData._id).then((card) => {
-          this.classList.add("element__like_active");
-          cardData.likes.length = card.likes.length;
-          element.querySelector(".element__counter-likes").textContent =
-            cardData.likes.length;
-        });
+        setLike(cardData._id)
+          .then((card) => {
+            this.classList.add("element__like_active");
+            cardData.likes.length = card.likes.length;
+            element.querySelector(".element__counter-likes").textContent =
+              cardData.likes.length;
+          })
+          .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
       }
     });
   //Событие на кнопку удаления
