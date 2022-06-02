@@ -1,0 +1,9 @@
+.popup__question {
+  background: #ffffff;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  display: grid;
+  row-gap: 32px;
+  grid-template-rows: max-content;
+  padding: 34px 36px 36px;
+}
