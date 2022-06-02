@@ -1,12 +1,13 @@
-.profile{
+.profile {
+  position: relative;
   width: 100%;
   margin-bottom: 50px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-@media screen and (max-width: 320px){
-  .profile{
+@media screen and (max-width: 320px) {
+  .profile {
     flex-direction: column;
     margin-bottom: 42px;
   }
