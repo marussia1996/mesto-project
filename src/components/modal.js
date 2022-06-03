@@ -4,12 +4,7 @@ import {
   handleDeleteElement,
 } from "./utils.js";
 import { toggleButtonState } from "./validate.js";
-import {
-  changeInfoProfile,
-  addNewCard,
-  deleteCard,
-  changeAvatar,
-} from "./api.js";
+import { changeAvatar } from "./api.js";
 import {
   popupImg,
   image,
@@ -90,17 +85,11 @@ export function openPropfilePopup() {
 }
 //Функция создания попапа удаления для карточки
 const popupDelTemplate = document.querySelector("#popupDel-template").content;
-export function createPopup(cardElement, idCard) {
+export function createPopup(cardElement, idCard, onCardDelete) {
   const popupTemplate = popupDelTemplate.querySelector(".popup");
   const popup = popupTemplate.cloneNode(true);
   popup.querySelector(".popup__button").addEventListener("click", function () {
-    deleteCard(cardElement, idCard)
-      .then((res) => {
-        closePopup(popup, false);
-        handleDeleteElement(cardElement.closest(".element"));
-        deletePopup(popup);
-      })
-      .catch((err) => console.log(`Ошибка при удалении: ${err}`));
+    onCardDelete(popup, cardElement, idCard);
   });
   popup.querySelector(".popup__toggle").addEventListener("click", function () {
     closePopup(popup, true);
@@ -119,7 +108,7 @@ export function deletePopup(popup) {
   handleDeleteElement(popup);
 }
 //Функции отправки формы
-export function handleProfileFormSubmit() {
+export function handleProfileFormSubmit(changeInfoProfile) {
   // Получите значение полей jobInput и nameInput из свойства value
   const nameInput = formName.value;
   const jobInput = formJob.value;
@@ -134,14 +123,19 @@ export function handleProfileFormSubmit() {
       renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
     );
 }
-export function handleAddCardFormSubmit(profileId) {
+export function handleAddCardFormSubmit(
+  profileId,
+  addNewCard,
+  handelCardLikeClick,
+  onCardDelete
+) {
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   const inputList = Array.from(formAdd.querySelectorAll(".form__item"));
   const buttonElement = formAdd.querySelector(".form__button");
   renderLoadingForButton(true, popupAdd.querySelector(".form__button"));
   addNewCard(mestoInput, linkInput)
-    .then((card) => addCard(card, profileId))
+    .then((card) => addCard(card, profileId, handelCardLikeClick, onCardDelete))
     .catch((err) => console.log(`Ошибка при добавлении:${err}`))
     .finally(() =>
       renderLoadingForButton(false, popupAdd.querySelector(".form__button"))

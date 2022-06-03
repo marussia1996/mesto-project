@@ -1,8 +1,8 @@
 import { createCard, elements } from "./card.js";
 import { profileName, profileJob, profileAvatar } from "./constants.js";
 //Добавление карточки
-export function addCard(cardData, profileId, onLikeClick) {
-  elements.prepend(createCard(cardData, profileId, onLikeClick));
+export function addCard(cardData, profileId, onLikeClick, onCardDelete) {
+  elements.prepend(createCard(cardData, profileId, onLikeClick, onCardDelete));
 }
 //Удаление элемента
 export const handleDeleteElement = (element) => {

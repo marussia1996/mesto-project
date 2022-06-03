@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import { addCard, setProfileInfoOnPage } from "./utils.js";
+import { addCard, setProfileInfoOnPage, handleDeleteElement } from "./utils.js";
 import { enableValidation } from "./validate.js";
 import {
   openPropfilePopup,
@@ -7,6 +7,8 @@ import {
   handleAddCardFormSubmit,
   handleChangeAvatarFormSubmit,
   openPopup,
+  closePopup,
+  deletePopup,
 } from "./modal.js";
 import {
   buttonEdit,
@@ -28,6 +30,9 @@ import {
   getInfoProfileFromServer,
   setLike,
   rejectLike,
+  changeInfoProfile,
+  addNewCard,
+  deleteCard,
 } from "./api.js";
 import { updateCardLikeIcon } from "./card.js";
 //Получение данных о пользователе
@@ -51,10 +56,15 @@ Promise.all([getInfoProfile(), getListCards()])
     setProfileInfoOnPage(values[0]);
     //Заполнение страницы карточками
     values[1].reverse().forEach((cardData) => {
-      addCard(cardData, values[0].profileId, handelCardLikeClick);
+      addCard(cardData, values[0].profileId, handelCardLikeClick, onCardDelete);
     });
     popupAdd.addEventListener("submit", () => {
-      handleAddCardFormSubmit(values[0].profileId);
+      handleAddCardFormSubmit(
+        values[0].profileId,
+        addNewCard,
+        handelCardLikeClick,
+        onCardDelete
+      );
     });
   })
   .catch((err) =>
@@ -75,6 +85,15 @@ function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
       .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
   }
 }
+function onCardDelete(popup, cardElement, idCard) {
+  deleteCard(cardElement, idCard)
+    .then((res) => {
+      closePopup(popup, false);
+      handleDeleteElement(cardElement.closest(".element"));
+      deletePopup(popup);
+    })
+    .catch((err) => console.log(`Ошибка при удалении: ${err}`));
+}
 //Валидация форм
 enableValidation({
   formSelector: formsSelector,
@@ -86,7 +105,9 @@ enableValidation({
   errorClass: errorClass,
 });
 //События отправки форм
-popupEdit.addEventListener("submit", handleProfileFormSubmit);
+popupEdit.addEventListener("submit", () =>
+  handleProfileFormSubmit(changeInfoProfile)
+);
 popupChangeAvatar.addEventListener("submit", handleChangeAvatarFormSubmit);
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {

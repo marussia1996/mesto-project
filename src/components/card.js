@@ -6,7 +6,7 @@ const getTemplate = (template) => {
   return template.querySelector(".element").cloneNode(true);
 };
 //Создание карточки
-function createCard(cardData, profileId, onLikeClick) {
+function createCard(cardData, profileId, onLikeClick, onCardDelete) {
   const element = getTemplate(elemTemplate);
   updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
@@ -20,7 +20,7 @@ function createCard(cardData, profileId, onLikeClick) {
     element
       .querySelector(".element__delete")
       .addEventListener("click", function () {
-        const popupDelete = createPopup(this, cardData._id);
+        const popupDelete = createPopup(this, cardData._id, onCardDelete);
         document.querySelector(".page").append(popupDelete);
         openPopup(popupDelete, true);
       });
