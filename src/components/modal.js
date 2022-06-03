@@ -1,8 +1,4 @@
-import {
-  addCard,
-  renderLoadingForButton,
-  handleDeleteElement,
-} from "./utils.js";
+import { renderLoadingForButton, handleDeleteElement } from "./utils.js";
 import { toggleButtonState } from "./validate.js";
 import {
   popupImg,
