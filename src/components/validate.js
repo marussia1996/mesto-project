@@ -31,7 +31,7 @@ const setEventListeners = (formElement, config) => {
     formElement.querySelectorAll(config.inputSelector)
   );
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
-  if (!formElement.classList.contains("form_type_edit")) {
+  if (!formElement.classList.contains(config.formEditClass)) {
     toggleButtonState(inputList, buttonElement, config);
   }
   inputList.forEach((inputElement) => {

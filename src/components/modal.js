@@ -1,52 +1,77 @@
-import {
-  openPopup,
-  closePopup,
-  addCard,
-  renderLoadingForButton,
-} from "./utils.js";
+import { renderLoadingForButton, handleDeleteElement } from "./utils.js";
 import { toggleButtonState } from "./validate.js";
 import {
-  changeInfoProfile,
-  addNewCard,
-  deleteCard,
-  changeAvatar,
-} from "./api.js";
-//Переменные для работы с профилем
-export const profile = document.querySelector(".profile");
-export const profileName = profile.querySelector(".profile__name");
-export const profileJob = profile.querySelector(".profile__job");
-export const profileAvatar = profile.querySelector(".profile__avatar");
-//Переменные для работы с формой редактирований
-export const popupEdit = document.querySelector(".popup_type_edit");
-const formEdit = popupEdit.querySelector(".form_type_edit");
-const formName = formEdit.querySelector(".form__item_info_name");
-const formJob = formEdit.querySelector(".form__item_info_job");
-//Переменные для работы с формой добавления
-export const popupAdd = document.querySelector(".popup_type_add");
-const formAdd = popupAdd.querySelector(".form_type_add");
-const formMesto = formAdd.querySelector(".form__item_info_mesto");
-const formLink = formAdd.querySelector(".form__item_info_link");
-//Переменные для работы с формой редактирования аватара пользователя
-export const popupChangeAvatar = document.querySelector(
-  ".popup_type_change-avatar"
-);
-const formChangeAvatar = popupChangeAvatar.querySelector(
-  ".form_type_change-avatar"
-);
-const linkChangeAvatar = formChangeAvatar.querySelector(
-  ".form__item_profile_change"
-);
-//Переменные для работы с формой просмотра
-export const popupImg = document.querySelector(".popup_type_image");
-const image = popupImg.querySelector(".popup__image");
-const signature = popupImg.querySelector(".popup__signature");
+  popupImg,
+  image,
+  signature,
+  formName,
+  formJob,
+  profileName,
+  profileJob,
+  popupEdit,
+  formAdd,
+  popupAdd,
+  formMesto,
+  formLink,
+  popups,
+  linkChangeAvatar,
+  popupChangeAvatar,
+  formChangeAvatar,
+  buttonClosePopupEdit,
+  buttonClosePopupAdd,
+  buttonClosePopupImg,
+  buttonClosePopupChange,
+} from "./constants.js";
 //Функция передачи параметров для попапа с картинкой
 export function handleCardClick(name, link) {
-  openPopup(popupImg);
+  openPopup(popupImg, false);
   image.src = link;
   image.alt = name;
   signature.textContent = name;
 }
+// Функции открытия/закрытия попап
+export function openPopup(popup, popupDeleted) {
+  popup.classList.add("popup_opened");
+  document.addEventListener("keydown", (evt) =>
+    closePopupByEsc(evt, popup, popupDeleted)
+  );
+}
+export function closePopup(popup, popupDeleted) {
+  popup.classList.remove("popup_opened");
+  document.removeEventListener("keydown", (evt) =>
+    closePopupByEsc(evt, popup, popupDeleted)
+  );
+}
+//Функция обработки нажатия на ESC
+function closePopupByEsc(evt, popup, popupDeleted) {
+  if (evt.key === "Escape") {
+    closePopup(popup);
+    if (popupDeleted) {
+      deletePopup(popup);
+    }
+  }
+}
+//Обработка закрытия по крестику
+buttonClosePopupEdit.addEventListener("click", function () {
+  closePopup(popupEdit, false);
+});
+buttonClosePopupAdd.addEventListener("click", function () {
+  closePopup(popupAdd, false);
+});
+buttonClosePopupImg.addEventListener("click", function () {
+  closePopup(popupImg, false);
+});
+buttonClosePopupChange.addEventListener("click", function () {
+  closePopup(popupChangeAvatar, true);
+});
+//Обработчик закрытия форм при нажатии на оверлей
+popups.forEach((popup) => {
+  popup.addEventListener("click", function (evt) {
+    if (evt.target.classList.contains("popup")) {
+      closePopup(popup, false);
+    }
+  });
+});
 // Функция для полей при открытии формы редактирования информации о пользователе
 export function openPropfilePopup() {
   formName.value = profileName.textContent;
@@ -54,36 +79,30 @@ export function openPropfilePopup() {
 }
 //Функция создания попапа удаления для карточки
 const popupDelTemplate = document.querySelector("#popupDel-template").content;
-export function createPopup(cardElement, idCard) {
+export function createPopup(cardElement, idCard, onCardDelete) {
   const popupTemplate = popupDelTemplate.querySelector(".popup");
   const popup = popupTemplate.cloneNode(true);
   popup.querySelector(".popup__button").addEventListener("click", function () {
-    deleteCard(cardElement, idCard)
-      .then((res) => {
-        closePopup(popup);
-        cardElement.closest(".element").remove();
-        setTimeout(deletePopup, 1000);
-      })
-      .catch((err) => console.log(`Ошибка при удалении: ${err}`));
+    onCardDelete(popup, cardElement, idCard);
   });
   popup.querySelector(".popup__toggle").addEventListener("click", function () {
-    closePopup(popup);
-    setTimeout(deletePopup, 1000);
+    closePopup(popup, true);
+    deletePopup(popup);
   });
   popup.addEventListener("click", function (evt) {
     if (evt.target.classList.contains("popup")) {
-      closePopup(popup);
-      setTimeout(deletePopup, 1000);
+      closePopup(popup, true);
+      deletePopup(popup);
     }
   });
   return popup;
 }
 //функция удаления попапа
-export function deletePopup() {
-  document.querySelector(".popup_type_delete").remove();
+export function deletePopup(popup) {
+  handleDeleteElement(popup);
 }
 //Функции отправки формы
-export function handleProfileFormSubmit() {
+export function handleProfileFormSubmit(onChangeInfoProfile) {
   // Получите значение полей jobInput и nameInput из свойства value
   const nameInput = formName.value;
   const jobInput = formJob.value;
@@ -91,53 +110,33 @@ export function handleProfileFormSubmit() {
   profileName.textContent = nameInput;
   profileJob.textContent = jobInput;
   renderLoadingForButton(true, popupEdit.querySelector(".form__button"));
-  changeInfoProfile(nameInput, jobInput)
-    .then(() => closePopup(popupEdit))
-    .catch((err) => console.log(`Ошибка при изменении данных: ${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
-    );
+  onChangeInfoProfile(nameInput, jobInput);
 }
-export function handleAddCardFormSubmit(profileId) {
+export function handleAddCardFormSubmit(onPostNewCard) {
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   const inputList = Array.from(formAdd.querySelectorAll(".form__item"));
   const buttonElement = formAdd.querySelector(".form__button");
   renderLoadingForButton(true, popupAdd.querySelector(".form__button"));
-  addNewCard(mestoInput, linkInput)
-    .then((card) => addCard(card, profileId))
-    .catch((err) => console.log(`Ошибка при добавлении:${err}`))
-    .finally(() =>
-      renderLoadingForButton(true, popupAdd.querySelector(".form__button"))
-    );
-  closePopup(popupAdd);
+  onPostNewCard(mestoInput, linkInput);
+  closePopup(popupAdd, false);
   formAdd.reset();
   toggleButtonState(inputList, buttonElement, {
     inactiveButtonClass: "form__button_inactive",
   });
 }
-export function handleChangeAvatarFormSubmit() {
+export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const linkAvatar = linkChangeAvatar.value;
   renderLoadingForButton(
     true,
     popupChangeAvatar.querySelector(".form__button")
   );
-  changeAvatar(linkAvatar)
-    .then(
-      (link) => (profileAvatar.style.backgroundImage = `url(${link.avatar})`)
-    )
-    .catch((err) => console.log(`Ошибка при изменении аватара:${err}`))
-    .finally(() =>
-      renderLoadingForButton(
-        true,
-        popupChangeAvatar.querySelector(".form__button")
-      )
-    );
+  onChangeAvatar(linkAvatar);
   const inputList = Array.from(
     formChangeAvatar.querySelectorAll(".form__item")
   );
   const buttonElement = formChangeAvatar.querySelector(".form__button");
-  closePopup(popupChangeAvatar);
+  closePopup(popupChangeAvatar, false);
   formChangeAvatar.reset();
   toggleButtonState(inputList, buttonElement, {
     inactiveButtonClass: "form__button_inactive",

@@ -1,63 +1,35 @@
-import { handleCardClick, createPopup } from "./modal.js";
-import { openPopup } from "./utils.js";
-import { setLike, rejectLike } from "./api.js";
-//Переменные для работы с элементами
-const elements = document.querySelector(".elements");
+import { handleCardClick, createPopup, openPopup } from "./modal.js";
+import { elements, elemTemplate } from "./constants.js";
+import { handleDeleteElement } from "./utils.js";
+//Функция получения шаблона карточки
+const getTemplate = (template) => {
+  return template.querySelector(".element").cloneNode(true);
+};
 //Создание карточки
-const elemTemplate = document.querySelector("#elem-template").content;
-function createCard(cardData, profileId) {
-  const element = elemTemplate.querySelector(".element").cloneNode(true);
-  //Определение является ли картинка лайкнутой нами ранее
-  if (isLikedByMe(cardData, profileId)) {
-    element
-      .querySelector(".element__like")
-      .classList.add("element__like_active");
-  } else {
-    element
-      .querySelector(".element__like")
-      .classList.remove("element__like_active");
-  }
+function createCard(cardData, profileId, onLikeClick, onCardDelete) {
+  const element = getTemplate(elemTemplate);
+  updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
   element
     .querySelector(".element__like")
     .addEventListener("click", function () {
-      if (this.classList.contains("element__like_active")) {
-        rejectLike(cardData._id)
-          .then((card) => {
-            this.classList.remove("element__like_active");
-            cardData.likes.length = card.likes.length;
-            element.querySelector(".element__counter-likes").textContent =
-              cardData.likes.length;
-          })
-          .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
-      } else {
-        setLike(cardData._id)
-          .then((card) => {
-            this.classList.add("element__like_active");
-            cardData.likes.length = card.likes.length;
-            element.querySelector(".element__counter-likes").textContent =
-              cardData.likes.length;
-          })
-          .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
-      }
+      onLikeClick(element, this, cardData, profileId);
     });
   //Событие на кнопку удаления
   if (cardData.owner._id === profileId) {
     element
       .querySelector(".element__delete")
       .addEventListener("click", function () {
-        const popupDelete = createPopup(this, cardData._id);
+        const popupDelete = createPopup(this, cardData._id, onCardDelete);
         document.querySelector(".page").append(popupDelete);
-        setTimeout(openPopup, 100, popupDelete);
+        openPopup(popupDelete, true);
       });
   } else {
-    element.querySelector(".element__delete").remove();
+    handleDeleteElement(element.querySelector(".element__delete"));
   }
   element.querySelector(".element__text").textContent = cardData.name;
   element.querySelector(".element__image").src = cardData.link;
   element.querySelector(".element__image").alt = cardData.name;
-  element.querySelector(".element__counter-likes").textContent =
-    cardData.likes.length;
   //Событие при нажатии на картинку
   element
     .querySelector(".element__image")
@@ -67,11 +39,23 @@ function createCard(cardData, profileId) {
   return element;
 }
 //Функция проверки лайка
-function isLikedByMe(cardData, profileId) {
+export function isLikedByMe(cardData, profileId) {
   return cardData.likes.some((like) => {
     if (like._id === profileId) {
       return true;
     }
   });
+}
+export function updateCardLikeIcon(card, cardData, profileId) {
+  if (isLikedByMe(cardData, profileId)) {
+    card.querySelector(".element__like").classList.add("element__like_active");
+  } else {
+    card
+      .querySelector(".element__like")
+      .classList.remove("element__like_active");
+  }
+  //Определение количества лайков у карточки
+  card.querySelector(".element__counter-likes").textContent =
+    cardData.likes.length;
 }
 export { createCard, elements };
