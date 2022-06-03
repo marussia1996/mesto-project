@@ -1,45 +1,101 @@
 import "../pages/index.css";
-import { addCard } from "./utils.js";
+import { addCard, setProfileInfoOnPage } from "./utils.js";
 import { enableValidation } from "./validate.js";
 import {
-  popupAdd,
-  popupEdit,
-  popupChangeAvatar,
+  openPropfilePopup,
   handleProfileFormSubmit,
   handleAddCardFormSubmit,
   handleChangeAvatarFormSubmit,
+  openPopup,
 } from "./modal.js";
-import { getInfoProfile, setProfileInfoOnPage } from "./profile.js";
-import { getListCards } from "./api.js";
-//Сохранение данных пользователя
-getInfoProfile()
-  .then((profileInfo) => {
+import {
+  buttonEdit,
+  buttonAdd,
+  buttonChangeAvatar,
+  popupEdit,
+  popupAdd,
+  popupChangeAvatar,
+  formsSelector,
+  formEditClass,
+  inputSelector,
+  submitButtonSelector,
+  inactiveButtonClass,
+  inputErrorClass,
+  errorClass,
+} from "./constants.js";
+import {
+  getListCards,
+  getInfoProfileFromServer,
+  setLike,
+  rejectLike,
+} from "./api.js";
+import { updateCardLikeIcon } from "./card.js";
+//Получение данных о пользователе
+const getInfoProfile = () => {
+  return getInfoProfileFromServer()
+    .then((data) => {
+      return {
+        profileId: data._id,
+        profileName: data.name,
+        profileJob: data.about,
+        profileAvatar: data.avatar,
+      };
+    })
+    .catch((err) => {
+      console.log(`Не удалось получить данные пользователя: ${err}`);
+    });
+};
+Promise.all([getInfoProfile(), getListCards()])
+  .then((values) => {
     //Заполнение данных пользователя
-    setProfileInfoOnPage(profileInfo);
+    setProfileInfoOnPage(values[0]);
     //Заполнение страницы карточками
-    getListCards()
-      .then((cards) => {
-        cards.reverse().forEach((card) => {
-          addCard(card, profileInfo.profileId);
-        });
-      })
-      .catch((error) => {
-        console.log(`Не удалось загрузить данные: ${error}`);
-      });
-    //Валидация форм
-    enableValidation({
-      formSelector: ".form",
-      inputSelector: ".form__item",
-      submitButtonSelector: ".form__button",
-      inactiveButtonClass: "form__button_inactive",
-      inputErrorClass: "form__item_type_error",
-      errorClass: "form__item-error_active",
+    values[1].reverse().forEach((cardData) => {
+      addCard(cardData, values[0].profileId, handelCardLikeClick);
     });
-    //События отправки форм
     popupAdd.addEventListener("submit", () => {
-      handleAddCardFormSubmit(profileInfo.profileId);
+      handleAddCardFormSubmit(values[0].profileId);
     });
-    popupEdit.addEventListener("submit", handleProfileFormSubmit);
-    popupChangeAvatar.addEventListener("submit", handleChangeAvatarFormSubmit);
   })
-  .catch((err) => console.log(err));
+  .catch((err) =>
+    console.log(`Ошибка при получении данных пользовтеля: ${err}`)
+  );
+function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
+  if (cardLikeBtn.classList.contains("element__like_active")) {
+    rejectLike(cardData._id)
+      .then((newCardData) => {
+        updateCardLikeIcon(card, newCardData, profileId);
+      })
+      .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
+  } else {
+    setLike(cardData._id)
+      .then((newCardData) => {
+        updateCardLikeIcon(card, newCardData, profileId);
+      })
+      .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
+  }
+}
+//Валидация форм
+enableValidation({
+  formSelector: formsSelector,
+  formEditClass: formEditClass,
+  inputSelector: inputSelector,
+  submitButtonSelector: submitButtonSelector,
+  inactiveButtonClass: inactiveButtonClass,
+  inputErrorClass: inputErrorClass,
+  errorClass: errorClass,
+});
+//События отправки форм
+popupEdit.addEventListener("submit", handleProfileFormSubmit);
+popupChangeAvatar.addEventListener("submit", handleChangeAvatarFormSubmit);
+// События при нажатии кнопок
+buttonEdit.addEventListener("click", function () {
+  openPropfilePopup();
+  openPopup(popupEdit, false);
+});
+buttonAdd.addEventListener("click", function () {
+  openPopup(popupAdd, false);
+});
+buttonChangeAvatar.addEventListener("click", function () {
+  openPopup(popupChangeAvatar, false);
+});
