@@ -4,7 +4,6 @@ import {
   handleDeleteElement,
 } from "./utils.js";
 import { toggleButtonState } from "./validate.js";
-import { changeAvatar } from "./api.js";
 import {
   popupImg,
   image,
@@ -21,7 +20,6 @@ import {
   popups,
   linkChangeAvatar,
   popupChangeAvatar,
-  profileAvatar,
   formChangeAvatar,
   buttonClosePopupEdit,
   buttonClosePopupAdd,
@@ -108,7 +106,7 @@ export function deletePopup(popup) {
   handleDeleteElement(popup);
 }
 //Функции отправки формы
-export function handleProfileFormSubmit(changeInfoProfile) {
+export function handleProfileFormSubmit(onChangeInfoProfile) {
   // Получите значение полей jobInput и nameInput из свойства value
   const nameInput = formName.value;
   const jobInput = formJob.value;
@@ -116,53 +114,28 @@ export function handleProfileFormSubmit(changeInfoProfile) {
   profileName.textContent = nameInput;
   profileJob.textContent = jobInput;
   renderLoadingForButton(true, popupEdit.querySelector(".form__button"));
-  changeInfoProfile(nameInput, jobInput)
-    .then(() => closePopup(popupEdit, false))
-    .catch((err) => console.log(`Ошибка при изменении данных: ${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
-    );
+  onChangeInfoProfile(nameInput, jobInput);
 }
-export function handleAddCardFormSubmit(
-  profileId,
-  addNewCard,
-  handelCardLikeClick,
-  onCardDelete
-) {
+export function handleAddCardFormSubmit(onPostNewCard) {
   const mestoInput = formMesto.value;
   const linkInput = formLink.value;
   const inputList = Array.from(formAdd.querySelectorAll(".form__item"));
   const buttonElement = formAdd.querySelector(".form__button");
   renderLoadingForButton(true, popupAdd.querySelector(".form__button"));
-  addNewCard(mestoInput, linkInput)
-    .then((card) => addCard(card, profileId, handelCardLikeClick, onCardDelete))
-    .catch((err) => console.log(`Ошибка при добавлении:${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupAdd.querySelector(".form__button"))
-    );
+  onPostNewCard(mestoInput, linkInput);
   closePopup(popupAdd, false);
   formAdd.reset();
   toggleButtonState(inputList, buttonElement, {
     inactiveButtonClass: "form__button_inactive",
   });
 }
-export function handleChangeAvatarFormSubmit() {
+export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const linkAvatar = linkChangeAvatar.value;
   renderLoadingForButton(
     true,
     popupChangeAvatar.querySelector(".form__button")
   );
-  changeAvatar(linkAvatar)
-    .then(
-      (link) => (profileAvatar.style.backgroundImage = `url(${link.avatar})`)
-    )
-    .catch((err) => console.log(`Ошибка при изменении аватара:${err}`))
-    .finally(() =>
-      renderLoadingForButton(
-        false,
-        popupChangeAvatar.querySelector(".form__button")
-      )
-    );
+  onChangeAvatar(linkAvatar);
   const inputList = Array.from(
     formChangeAvatar.querySelectorAll(".form__item")
   );

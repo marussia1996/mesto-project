@@ -1,5 +1,10 @@
 import "../pages/index.css";
-import { addCard, setProfileInfoOnPage, handleDeleteElement } from "./utils.js";
+import {
+  addCard,
+  setProfileInfoOnPage,
+  handleDeleteElement,
+  renderLoadingForButton,
+} from "./utils.js";
 import { enableValidation } from "./validate.js";
 import {
   openPropfilePopup,
@@ -24,6 +29,7 @@ import {
   inactiveButtonClass,
   inputErrorClass,
   errorClass,
+  profileAvatar,
 } from "./constants.js";
 import {
   getListCards,
@@ -33,6 +39,7 @@ import {
   changeInfoProfile,
   addNewCard,
   deleteCard,
+  changeAvatar,
 } from "./api.js";
 import { updateCardLikeIcon } from "./card.js";
 //Получение данных о пользователе
@@ -59,11 +66,14 @@ Promise.all([getInfoProfile(), getListCards()])
       addCard(cardData, values[0].profileId, handelCardLikeClick, onCardDelete);
     });
     popupAdd.addEventListener("submit", () => {
-      handleAddCardFormSubmit(
-        values[0].profileId,
-        addNewCard,
-        handelCardLikeClick,
-        onCardDelete
+      handleAddCardFormSubmit((mestoInput, linkInput) =>
+        onPostNewCard(
+          mestoInput,
+          linkInput,
+          values[0].profileId,
+          handelCardLikeClick,
+          onCardDelete
+        )
       );
     });
   })
@@ -94,6 +104,41 @@ function onCardDelete(popup, cardElement, idCard) {
     })
     .catch((err) => console.log(`Ошибка при удалении: ${err}`));
 }
+function onChangeAvatar(linkAvatar) {
+  changeAvatar(linkAvatar)
+    .then(
+      (link) => (profileAvatar.style.backgroundImage = `url(${link.avatar})`)
+    )
+    .catch((err) => console.log(`Ошибка при изменении аватара:${err}`))
+    .finally(() =>
+      renderLoadingForButton(
+        false,
+        popupChangeAvatar.querySelector(".form__button")
+      )
+    );
+}
+function onChangeInfoProfile(nameInput, jobInput) {
+  changeInfoProfile(nameInput, jobInput)
+    .then(() => closePopup(popupEdit, false))
+    .catch((err) => console.log(`Ошибка при изменении данных: ${err}`))
+    .finally(() =>
+      renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
+    );
+}
+function onPostNewCard(
+  mestoInput,
+  linkInput,
+  profileId,
+  handelCardLikeClick,
+  onCardDelete
+) {
+  addNewCard(mestoInput, linkInput)
+    .then((card) => addCard(card, profileId, handelCardLikeClick, onCardDelete))
+    .catch((err) => console.log(`Ошибка при добавлении:${err}`))
+    .finally(() =>
+      renderLoadingForButton(false, popupAdd.querySelector(".form__button"))
+    );
+}
 //Валидация форм
 enableValidation({
   formSelector: formsSelector,
@@ -106,9 +151,11 @@ enableValidation({
 });
 //События отправки форм
 popupEdit.addEventListener("submit", () =>
-  handleProfileFormSubmit(changeInfoProfile)
+  handleProfileFormSubmit(onChangeInfoProfile)
 );
-popupChangeAvatar.addEventListener("submit", handleChangeAvatarFormSubmit);
+popupChangeAvatar.addEventListener("submit", () =>
+  handleChangeAvatarFormSubmit(onChangeAvatar)
+);
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
   openPropfilePopup();
