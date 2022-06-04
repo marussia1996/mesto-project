@@ -4,11 +4,6 @@ import { profileName, profileJob, profileAvatar } from "./constants.js";
 export function addCard(cardData, profileId, onLikeClick, onCardDelete) {
   elements.prepend(createCard(cardData, profileId, onLikeClick, onCardDelete));
 }
-//Удаление элемента
-export const handleDeleteElement = (element) => {
-  element.remove();
-  element = null;
-};
 //Функция для показа пользователю, что данные грузятся
 export function renderLoadingForButton(isLoading, button) {
   if (isLoading) {

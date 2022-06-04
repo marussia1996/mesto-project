@@ -1,9 +1,8 @@
-import { renderLoadingForButton, handleDeleteElement } from "./utils.js";
+import { renderLoadingForButton } from "./utils.js";
+import { handleDeleteElement } from "./card.js";
 import { toggleButtonState } from "./validate.js";
 import {
   popupImg,
-  image,
-  signature,
   formName,
   formJob,
   profileName,
@@ -13,6 +12,7 @@ import {
   popupAdd,
   formMesto,
   formLink,
+  popupDelete,
   popups,
   linkChangeAvatar,
   popupChangeAvatar,
@@ -21,14 +21,9 @@ import {
   buttonClosePopupAdd,
   buttonClosePopupImg,
   buttonClosePopupChange,
+  buttonClosePopupDelete,
 } from "./constants.js";
-//Функция передачи параметров для попапа с картинкой
-export function handleCardClick(name, link) {
-  openPopup(popupImg, false);
-  image.src = link;
-  image.alt = name;
-  signature.textContent = name;
-}
+
 // Функции открытия/закрытия попап
 export function openPopup(popup, popupDeleted) {
   popup.classList.add("popup_opened");
@@ -64,6 +59,9 @@ buttonClosePopupImg.addEventListener("click", function () {
 buttonClosePopupChange.addEventListener("click", function () {
   closePopup(popupChangeAvatar, true);
 });
+buttonClosePopupDelete.addEventListener("click", function () {
+  closePopup(popupDelete, true);
+});
 //Обработчик закрытия форм при нажатии на оверлей
 popups.forEach((popup) => {
   popup.addEventListener("click", function (evt) {
@@ -77,26 +75,7 @@ export function openPropfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
 }
-//Функция создания попапа удаления для карточки
-const popupDelTemplate = document.querySelector("#popupDel-template").content;
-export function createPopup(cardElement, idCard, onCardDelete) {
-  const popupTemplate = popupDelTemplate.querySelector(".popup");
-  const popup = popupTemplate.cloneNode(true);
-  popup.querySelector(".popup__button").addEventListener("click", function () {
-    onCardDelete(popup, cardElement, idCard);
-  });
-  popup.querySelector(".popup__toggle").addEventListener("click", function () {
-    closePopup(popup, true);
-    deletePopup(popup);
-  });
-  popup.addEventListener("click", function (evt) {
-    if (evt.target.classList.contains("popup")) {
-      closePopup(popup, true);
-      deletePopup(popup);
-    }
-  });
-  return popup;
-}
+
 //функция удаления попапа
 export function deletePopup(popup) {
   handleDeleteElement(popup);
@@ -125,6 +104,10 @@ export function handleAddCardFormSubmit(onPostNewCard) {
     inactiveButtonClass: "form__button_inactive",
   });
 }
+export function handleDeleteCardFormSubmit(idCard, cardElement, onCardDelete) {
+  onCardDelete(popupDelete, cardElement, idCard);
+}
+
 export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const linkAvatar = linkChangeAvatar.value;
   renderLoadingForButton(

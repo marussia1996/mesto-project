@@ -1,13 +1,27 @@
-import { handleCardClick, createPopup, openPopup } from "./modal.js";
-import { elements, elemTemplate } from "./constants.js";
-import { handleDeleteElement } from "./utils.js";
+import { handleDeleteCardFormSubmit, openPopup } from "./modal.js";
+import { popupDelete, elements, image, signature } from "./constants.js";
 //Функция получения шаблона карточки
-const getTemplate = (template) => {
-  return template.querySelector(".element").cloneNode(true);
+const getTemplate = () => {
+  return document
+    .querySelector("#elem-template")
+    .content.querySelector(".element")
+    .cloneNode(true);
 };
+//Удаление элемента
+export const handleDeleteElement = (element) => {
+  element.remove();
+  element = null;
+};
+//Функция передачи параметров для попапа с картинкой
+function handleCardClick(name, link) {
+  openPopup(popupImg, false);
+  image.src = link;
+  image.alt = name;
+  signature.textContent = name;
+}
 //Создание карточки
 function createCard(cardData, profileId, onLikeClick, onCardDelete) {
-  const element = getTemplate(elemTemplate);
+  const element = getTemplate();
   updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
   element
@@ -20,9 +34,12 @@ function createCard(cardData, profileId, onLikeClick, onCardDelete) {
     element
       .querySelector(".element__delete")
       .addEventListener("click", function () {
-        const popupDelete = createPopup(this, cardData._id, onCardDelete);
-        document.querySelector(".page").append(popupDelete);
         openPopup(popupDelete, true);
+        popupDelete
+          .querySelector(".popup__button")
+          .addEventListener("click", () => {
+            handleDeleteCardFormSubmit(cardData._id, element, onCardDelete);
+          });
       });
   } else {
     handleDeleteElement(element.querySelector(".element__delete"));

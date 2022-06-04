@@ -2,7 +2,6 @@ import "../pages/index.css";
 import {
   addCard,
   setProfileInfoOnPage,
-  handleDeleteElement,
   renderLoadingForButton,
 } from "./utils.js";
 import { enableValidation } from "./validate.js";
@@ -41,7 +40,7 @@ import {
   deleteCard,
   changeAvatar,
 } from "./api.js";
-import { updateCardLikeIcon } from "./card.js";
+import { updateCardLikeIcon, handleDeleteElement } from "./card.js";
 //Получение данных о пользователе
 const getInfoProfile = () => {
   return getInfoProfileFromServer()
@@ -96,11 +95,10 @@ function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
   }
 }
 function onCardDelete(popup, cardElement, idCard) {
-  deleteCard(cardElement, idCard)
+  deleteCard(idCard)
     .then((res) => {
       closePopup(popup, false);
       handleDeleteElement(cardElement.closest(".element"));
-      deletePopup(popup);
     })
     .catch((err) => console.log(`Ошибка при удалении: ${err}`));
 }

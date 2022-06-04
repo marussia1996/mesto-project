@@ -41,7 +41,7 @@ export const addNewCard = (nameCard, linkCard) => {
     }),
   }).then(getResponse);
 };
-export const deleteCard = (cardElement, idCard) => {
+export const deleteCard = (idCard) => {
   return fetch(`${apiConfig.baseUrl}/cards/${idCard}`, {
     method: "DELETE",
     headers: apiConfig.headers,
