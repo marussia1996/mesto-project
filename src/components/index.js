@@ -88,7 +88,7 @@ Promise.all([getInfoProfile(), getListCards()])
     });
   })
   .catch((err) =>
-    console.log(`Ошибка при получении данных пользовтеля: ${err}`)
+    console.log(`Ошибка при получении данных пользователя: ${err}`)
   );
 function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
   if (cardLikeBtn.classList.contains("element__like_active")) {
