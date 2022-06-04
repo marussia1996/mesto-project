@@ -1,8 +1,10 @@
-import { createCard, elements } from "./card.js";
+import { getCardElement, elements } from "./card.js";
 import { profileName, profileJob, profileAvatar } from "./utils/constants.js";
 //Добавление карточки
 export function addCard(cardData, profileId, onLikeClick, onCardDelete) {
-  elements.prepend(createCard(cardData, profileId, onLikeClick, onCardDelete));
+  elements.prepend(
+    getCardElement(cardData, profileId, onLikeClick, onCardDelete)
+  );
 }
 //Функция для показа пользователю, что данные грузятся
 export function renderLoadingForButton(isLoading, button) {

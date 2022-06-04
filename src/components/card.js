@@ -20,7 +20,7 @@ function handleCardClick(name, link) {
   signature.textContent = name;
 }
 //Получение элемента карточки
-function createCard(cardData, profileId, onLikeClick, onCardDelete) {
+function getCardElement(cardData, profileId, onLikeClick, onCardDelete) {
   const element = getTemplate();
   updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
@@ -75,4 +75,4 @@ export function updateCardLikeIcon(card, cardData, profileId) {
   card.querySelector(".element__counter-likes").textContent =
     cardData.likes.length;
 }
-export { createCard, elements };
+export { getCardElement, elements };
