@@ -1,5 +1,5 @@
 import { createCard, elements } from "./card.js";
-import { profileName, profileJob, profileAvatar } from "./constants.js";
+import { profileName, profileJob, profileAvatar } from "./utils/constants.js";
 //Добавление карточки
 export function addCard(cardData, profileId, onLikeClick, onCardDelete) {
   elements.prepend(createCard(cardData, profileId, onLikeClick, onCardDelete));

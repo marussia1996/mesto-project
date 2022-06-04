@@ -1,8 +1,6 @@
 import { renderLoadingForButton } from "./utils.js";
-import { handleDeleteElement } from "./card.js";
 import { toggleButtonState } from "./validate.js";
 import {
-  popupImg,
   formName,
   formJob,
   profileName,
@@ -17,56 +15,28 @@ import {
   linkChangeAvatar,
   popupChangeAvatar,
   formChangeAvatar,
-  buttonClosePopupEdit,
-  buttonClosePopupAdd,
-  buttonClosePopupImg,
-  buttonClosePopupChange,
-  buttonClosePopupDelete,
-} from "./constants.js";
-
+} from "./utils/constants.js";
 // Функции открытия/закрытия попап
-export function openPopup(popup, popupDeleted) {
+export function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener("keydown", (evt) =>
-    closePopupByEsc(evt, popup, popupDeleted)
-  );
+  document.addEventListener("keydown", closePopupByEsc);
 }
-export function closePopup(popup, popupDeleted) {
+export function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener("keydown", (evt) =>
-    closePopupByEsc(evt, popup, popupDeleted)
-  );
+  document.removeEventListener("keydown", closePopupByEsc);
 }
 //Функция обработки нажатия на ESC
-function closePopupByEsc(evt, popup, popupDeleted) {
+function closePopupByEsc(evt) {
+  const activePopup = document.querySelector(".popup_opened");
   if (evt.key === "Escape") {
-    closePopup(popup);
-    if (popupDeleted) {
-      deletePopup(popup);
-    }
+    closePopup(activePopup);
   }
 }
-//Обработка закрытия по крестику
-buttonClosePopupEdit.addEventListener("click", function () {
-  closePopup(popupEdit, false);
-});
-buttonClosePopupAdd.addEventListener("click", function () {
-  closePopup(popupAdd, false);
-});
-buttonClosePopupImg.addEventListener("click", function () {
-  closePopup(popupImg, false);
-});
-buttonClosePopupChange.addEventListener("click", function () {
-  closePopup(popupChangeAvatar, true);
-});
-buttonClosePopupDelete.addEventListener("click", function () {
-  closePopup(popupDelete, true);
-});
 //Обработчик закрытия форм при нажатии на оверлей
 popups.forEach((popup) => {
   popup.addEventListener("click", function (evt) {
     if (evt.target.classList.contains("popup")) {
-      closePopup(popup, false);
+      closePopup(popup);
     }
   });
 });
@@ -74,11 +44,6 @@ popups.forEach((popup) => {
 export function openPropfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
-}
-
-//функция удаления попапа
-export function deletePopup(popup) {
-  handleDeleteElement(popup);
 }
 //Функции отправки формы
 export function handleProfileFormSubmit(onChangeInfoProfile) {
@@ -98,7 +63,7 @@ export function handleAddCardFormSubmit(onPostNewCard) {
   const buttonElement = formAdd.querySelector(".form__button");
   renderLoadingForButton(true, popupAdd.querySelector(".form__button"));
   onPostNewCard(mestoInput, linkInput);
-  closePopup(popupAdd, false);
+  closePopup(popupAdd);
   formAdd.reset();
   toggleButtonState(inputList, buttonElement, {
     inactiveButtonClass: "form__button_inactive",
@@ -107,7 +72,6 @@ export function handleAddCardFormSubmit(onPostNewCard) {
 export function handleDeleteCardFormSubmit(idCard, cardElement, onCardDelete) {
   onCardDelete(popupDelete, cardElement, idCard);
 }
-
 export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const linkAvatar = linkChangeAvatar.value;
   renderLoadingForButton(
@@ -119,7 +83,7 @@ export function handleChangeAvatarFormSubmit(onChangeAvatar) {
     formChangeAvatar.querySelectorAll(".form__item")
   );
   const buttonElement = formChangeAvatar.querySelector(".form__button");
-  closePopup(popupChangeAvatar, false);
+  closePopup(popupChangeAvatar);
   formChangeAvatar.reset();
   toggleButtonState(inputList, buttonElement, {
     inactiveButtonClass: "form__button_inactive",
