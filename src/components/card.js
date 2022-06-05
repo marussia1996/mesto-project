@@ -1,4 +1,4 @@
-import { handleDeleteCardFormSubmit, openPopup } from "./modal.js";
+import { openPopup } from "./modal.js";
 import { popupDelete, elements, image, signature } from "./utils/constants.js";
 //Функция получения шаблона карточки
 const getTemplate = () => {
@@ -20,7 +20,13 @@ function handleCardClick(name, link) {
   signature.textContent = name;
 }
 //Получение элемента карточки
-function getCardElement(cardData, profileId, onLikeClick, onCardDelete) {
+function getCardElement(
+  cardData,
+  profileId,
+  onLikeClick,
+  onCardDelete,
+  onDeleteClick
+) {
   const element = getTemplate();
   updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
@@ -34,12 +40,7 @@ function getCardElement(cardData, profileId, onLikeClick, onCardDelete) {
     element
       .querySelector(".element__delete")
       .addEventListener("click", function () {
-        openPopup(popupDelete);
-        popupDelete
-          .querySelector(".popup__button")
-          .addEventListener("click", () => {
-            handleDeleteCardFormSubmit(cardData._id, element, onCardDelete);
-          });
+        onDeleteClick(popupDelete, cardData._id, element, onCardDelete);
       });
   } else {
     handleDeleteElement(element.querySelector(".element__delete"));

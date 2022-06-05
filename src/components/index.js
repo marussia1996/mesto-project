@@ -10,6 +10,7 @@ import {
   handleProfileFormSubmit,
   handleAddCardFormSubmit,
   handleChangeAvatarFormSubmit,
+  handleDeleteCardFormSubmit,
   openPopup,
   closePopup,
 } from "./modal.js";
@@ -72,7 +73,8 @@ Promise.all([getInfoProfile(), getListCards()])
         cardData,
         profileInfo.profileId,
         handelCardLikeClick,
-        onCardDelete
+        onCardDelete,
+        handelCardDeleteClick
       );
     });
     popupAdd.addEventListener("submit", () => {
@@ -82,7 +84,8 @@ Promise.all([getInfoProfile(), getListCards()])
           linkInput,
           profileInfo.profileId,
           handelCardLikeClick,
-          onCardDelete
+          onCardDelete,
+          handelCardDeleteClick
         )
       );
     });
@@ -104,6 +107,12 @@ function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
       })
       .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
   }
+}
+function handelCardDeleteClick(popup, cardId, element, onCardDelete) {
+  openPopup(popup);
+  popup.querySelector(".popup__button").addEventListener("click", () => {
+    handleDeleteCardFormSubmit(cardId, element, onCardDelete);
+  });
 }
 function onCardDelete(popup, cardElement, idCard) {
   deleteCard(idCard)
@@ -139,10 +148,19 @@ function onPostNewCard(
   linkInput,
   profileId,
   handelCardLikeClick,
-  onCardDelete
+  onCardDelete,
+  handelCardDeleteClick
 ) {
   addNewCard(mestoInput, linkInput)
-    .then((card) => addCard(card, profileId, handelCardLikeClick, onCardDelete))
+    .then((card) =>
+      addCard(
+        card,
+        profileId,
+        handelCardLikeClick,
+        onCardDelete,
+        handelCardDeleteClick
+      )
+    )
     .catch((err) => console.log(`Ошибка при добавлении:${err}`))
     .finally(() =>
       renderLoadingForButton(false, popupAdd.querySelector(".form__button"))
