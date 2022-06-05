@@ -19,19 +19,12 @@ export function addCard(
   );
 }
 //Функция для показа пользователю, что данные грузятся
-export function renderLoadingForButton(isLoading, button) {
+export function renderLoadingForButton(isLoading, popup) {
+  const currentActiveButton = popup.querySelector(".form__button");
   if (isLoading) {
-    if (button.textContent.replace(/\s+/g, "") === "Сохранить") {
-      button.textContent = "Сохранение...";
-    } else {
-      button.textContent = "Создание...";
-    }
+    currentActiveButton.textContent = "Сохранение...";
   } else {
-    if (button.textContent.replace(/\s+/g, "") === "Сохранение...") {
-      button.textContent = "Сохранить";
-    } else {
-      button.textContent = "Создать";
-    }
+    currentActiveButton.textContent = "Сохранить";
   }
 }
 // функция заполнения данных профиля

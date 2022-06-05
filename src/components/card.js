@@ -1,5 +1,11 @@
 import { openPopup } from "./modal.js";
-import { popupDelete, elements, image, signature } from "./utils/constants.js";
+import {
+  popupDelete,
+  popupImg,
+  elements,
+  image,
+  signature,
+} from "./utils/constants.js";
 //Функция получения шаблона карточки
 const getTemplate = () => {
   return document

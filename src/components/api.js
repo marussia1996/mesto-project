@@ -1,4 +1,4 @@
-import { apiConfig } from "./utils/constants";
+import { apiConfig } from "./utils/constants.js";
 const getResponse = (res) => {
   if (res.ok) {
     return res.json();

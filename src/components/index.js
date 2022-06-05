@@ -128,20 +128,13 @@ function onChangeAvatar(linkAvatar) {
       (link) => (profileAvatar.style.backgroundImage = `url(${link.avatar})`)
     )
     .catch((err) => console.log(`Ошибка при изменении аватара:${err}`))
-    .finally(() =>
-      renderLoadingForButton(
-        false,
-        popupChangeAvatar.querySelector(".form__button")
-      )
-    );
+    .finally(() => renderLoadingForButton(false, popupChangeAvatar));
 }
 function onChangeInfoProfile(nameInput, jobInput) {
   changeInfoProfile(nameInput, jobInput)
     .then(() => closePopup(popupEdit))
     .catch((err) => console.log(`Ошибка при изменении данных: ${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
-    );
+    .finally(() => renderLoadingForButton(false, popupEdit));
 }
 function onPostNewCard(
   mestoInput,
@@ -162,9 +155,7 @@ function onPostNewCard(
       )
     )
     .catch((err) => console.log(`Ошибка при добавлении:${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupAdd.querySelector(".form__button"))
-    );
+    .finally(() => renderLoadingForButton(false, popupAdd));
 }
 //Валидация форм
 enableValidation({

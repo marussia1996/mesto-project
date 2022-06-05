@@ -53,7 +53,7 @@ export function handleProfileFormSubmit(onChangeInfoProfile) {
   // Выберите элементы, куда должны быть вставлены значения полей && Вставьте новые значения с помощью textContent
   profileName.textContent = nameInput;
   profileJob.textContent = jobInput;
-  renderLoadingForButton(true, popupEdit.querySelector(".form__button"));
+  renderLoadingForButton(true, popupEdit);
   onChangeInfoProfile(nameInput, jobInput);
 }
 export function handleAddCardFormSubmit(onPostNewCard) {
@@ -61,7 +61,7 @@ export function handleAddCardFormSubmit(onPostNewCard) {
   const linkInput = formLink.value;
   const inputList = Array.from(formAdd.querySelectorAll(".form__item"));
   const buttonElement = formAdd.querySelector(".form__button");
-  renderLoadingForButton(true, popupAdd.querySelector(".form__button"));
+  renderLoadingForButton(true, popupAdd);
   onPostNewCard(mestoInput, linkInput);
   closePopup(popupAdd);
   formAdd.reset();
@@ -74,10 +74,7 @@ export function handleDeleteCardFormSubmit(idCard, cardElement, onCardDelete) {
 }
 export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const linkAvatar = linkChangeAvatar.value;
-  renderLoadingForButton(
-    true,
-    popupChangeAvatar.querySelector(".form__button")
-  );
+  renderLoadingForButton(true, popupChangeAvatar);
   onChangeAvatar(linkAvatar);
   const inputList = Array.from(
     formChangeAvatar.querySelectorAll(".form__item")
