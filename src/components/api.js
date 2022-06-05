@@ -1,10 +1,4 @@
-const apiConfig = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
-  headers: {
-    Authorization: "faedd00d-3d28-4943-bdc6-39d59e46ebad",
-    "Content-Type": "application/json",
-  },
-};
+import { apiConfig } from "./utils/constants.js";
 const getResponse = (res) => {
   if (res.ok) {
     return res.json();
@@ -41,7 +35,7 @@ export const addNewCard = (nameCard, linkCard) => {
     }),
   }).then(getResponse);
 };
-export const deleteCard = (cardElement, idCard) => {
+export const deleteCard = (idCard) => {
   return fetch(`${apiConfig.baseUrl}/cards/${idCard}`, {
     method: "DELETE",
     headers: apiConfig.headers,

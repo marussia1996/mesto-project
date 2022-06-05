@@ -1,28 +1,30 @@
-import { createCard, elements } from "./card.js";
-import { profileName, profileJob, profileAvatar } from "./constants.js";
+import { getCardElement, elements } from "./card.js";
+import { profileName, profileJob, profileAvatar } from "./utils/constants.js";
 //Добавление карточки
-export function addCard(cardData, profileId, onLikeClick, onCardDelete) {
-  elements.prepend(createCard(cardData, profileId, onLikeClick, onCardDelete));
+export function addCard(
+  cardData,
+  profileId,
+  onLikeClick,
+  onCardDelete,
+  onDeleteClick
+) {
+  elements.prepend(
+    getCardElement(
+      cardData,
+      profileId,
+      onLikeClick,
+      onCardDelete,
+      onDeleteClick
+    )
+  );
 }
-//Удаление элемента
-export const handleDeleteElement = (element) => {
-  element.remove();
-  element = null;
-};
 //Функция для показа пользователю, что данные грузятся
-export function renderLoadingForButton(isLoading, button) {
+export function renderLoadingForButton(isLoading, popup) {
+  const currentActiveButton = popup.querySelector(".form__button");
   if (isLoading) {
-    if (button.textContent.replace(/\s+/g, "") === "Сохранить") {
-      button.textContent = "Сохранение...";
-    } else {
-      button.textContent = "Создание...";
-    }
+    currentActiveButton.textContent = "Сохранение...";
   } else {
-    if (button.textContent.replace(/\s+/g, "") === "Сохранение...") {
-      button.textContent = "Сохранить";
-    } else {
-      button.textContent = "Создать";
-    }
+    currentActiveButton.textContent = "Сохранить";
   }
 }
 // функция заполнения данных профиля

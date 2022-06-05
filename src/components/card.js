@@ -1,13 +1,39 @@
-import { handleCardClick, createPopup, openPopup } from "./modal.js";
-import { elements, elemTemplate } from "./constants.js";
-import { handleDeleteElement } from "./utils.js";
+import { openPopup } from "./modal.js";
+import {
+  popupDelete,
+  popupImg,
+  elements,
+  image,
+  signature,
+} from "./utils/constants.js";
 //Функция получения шаблона карточки
-const getTemplate = (template) => {
-  return template.querySelector(".element").cloneNode(true);
+const getTemplate = () => {
+  return document
+    .querySelector("#elem-template")
+    .content.querySelector(".element")
+    .cloneNode(true);
 };
-//Создание карточки
-function createCard(cardData, profileId, onLikeClick, onCardDelete) {
-  const element = getTemplate(elemTemplate);
+//Удаление элемента
+export const handleDeleteElement = (element) => {
+  element.remove();
+  element = null;
+};
+//Функция передачи параметров для попапа с картинкой
+function handleCardClick(name, link) {
+  openPopup(popupImg);
+  image.src = link;
+  image.alt = name;
+  signature.textContent = name;
+}
+//Получение элемента карточки
+function getCardElement(
+  cardData,
+  profileId,
+  onLikeClick,
+  onCardDelete,
+  onDeleteClick
+) {
+  const element = getTemplate();
   updateCardLikeIcon(element, cardData, profileId);
   //Событие на кнопку лайка
   element
@@ -20,9 +46,7 @@ function createCard(cardData, profileId, onLikeClick, onCardDelete) {
     element
       .querySelector(".element__delete")
       .addEventListener("click", function () {
-        const popupDelete = createPopup(this, cardData._id, onCardDelete);
-        document.querySelector(".page").append(popupDelete);
-        openPopup(popupDelete, true);
+        onDeleteClick(popupDelete, cardData._id, element, onCardDelete);
       });
   } else {
     handleDeleteElement(element.querySelector(".element__delete"));
@@ -58,4 +82,4 @@ export function updateCardLikeIcon(card, cardData, profileId) {
   card.querySelector(".element__counter-likes").textContent =
     cardData.likes.length;
 }
-export { createCard, elements };
+export { getCardElement, elements };

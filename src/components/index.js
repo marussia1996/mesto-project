@@ -2,7 +2,6 @@ import "../pages/index.css";
 import {
   addCard,
   setProfileInfoOnPage,
-  handleDeleteElement,
   renderLoadingForButton,
 } from "./utils.js";
 import { enableValidation } from "./validate.js";
@@ -11,9 +10,9 @@ import {
   handleProfileFormSubmit,
   handleAddCardFormSubmit,
   handleChangeAvatarFormSubmit,
+  handleDeleteCardFormSubmit,
   openPopup,
   closePopup,
-  deletePopup,
 } from "./modal.js";
 import {
   buttonEdit,
@@ -22,6 +21,8 @@ import {
   popupEdit,
   popupAdd,
   popupChangeAvatar,
+  popupImg,
+  popupDelete,
   formsSelector,
   formEditClass,
   inputSelector,
@@ -30,7 +31,12 @@ import {
   inputErrorClass,
   errorClass,
   profileAvatar,
-} from "./constants.js";
+  buttonClosePopupEdit,
+  buttonClosePopupAdd,
+  buttonClosePopupImg,
+  buttonClosePopupChange,
+  buttonClosePopupDelete,
+} from "./utils/constants.js";
 import {
   getListCards,
   getInfoProfileFromServer,
@@ -41,7 +47,7 @@ import {
   deleteCard,
   changeAvatar,
 } from "./api.js";
-import { updateCardLikeIcon } from "./card.js";
+import { updateCardLikeIcon, handleDeleteElement } from "./card.js";
 //Получение данных о пользователе
 const getInfoProfile = () => {
   return getInfoProfileFromServer()
@@ -58,27 +64,34 @@ const getInfoProfile = () => {
     });
 };
 Promise.all([getInfoProfile(), getListCards()])
-  .then((values) => {
+  .then(([profileInfo, cardsList]) => {
     //Заполнение данных пользователя
-    setProfileInfoOnPage(values[0]);
+    setProfileInfoOnPage(profileInfo);
     //Заполнение страницы карточками
-    values[1].reverse().forEach((cardData) => {
-      addCard(cardData, values[0].profileId, handelCardLikeClick, onCardDelete);
+    cardsList.reverse().forEach((cardData) => {
+      addCard(
+        cardData,
+        profileInfo.profileId,
+        handelCardLikeClick,
+        onCardDelete,
+        handelCardDeleteClick
+      );
     });
     popupAdd.addEventListener("submit", () => {
       handleAddCardFormSubmit((mestoInput, linkInput) =>
         onPostNewCard(
           mestoInput,
           linkInput,
-          values[0].profileId,
+          profileInfo.profileId,
           handelCardLikeClick,
-          onCardDelete
+          onCardDelete,
+          handelCardDeleteClick
         )
       );
     });
   })
   .catch((err) =>
-    console.log(`Ошибка при получении данных пользовтеля: ${err}`)
+    console.log(`Ошибка при получении данных пользователя: ${err}`)
   );
 function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
   if (cardLikeBtn.classList.contains("element__like_active")) {
@@ -95,12 +108,17 @@ function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
       .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
   }
 }
+function handelCardDeleteClick(popup, cardId, element, onCardDelete) {
+  openPopup(popup);
+  popup.querySelector(".popup__button").addEventListener("click", () => {
+    handleDeleteCardFormSubmit(cardId, element, onCardDelete);
+  });
+}
 function onCardDelete(popup, cardElement, idCard) {
-  deleteCard(cardElement, idCard)
+  deleteCard(idCard)
     .then((res) => {
-      closePopup(popup, false);
+      closePopup(popup);
       handleDeleteElement(cardElement.closest(".element"));
-      deletePopup(popup);
     })
     .catch((err) => console.log(`Ошибка при удалении: ${err}`));
 }
@@ -110,34 +128,34 @@ function onChangeAvatar(linkAvatar) {
       (link) => (profileAvatar.style.backgroundImage = `url(${link.avatar})`)
     )
     .catch((err) => console.log(`Ошибка при изменении аватара:${err}`))
-    .finally(() =>
-      renderLoadingForButton(
-        false,
-        popupChangeAvatar.querySelector(".form__button")
-      )
-    );
+    .finally(() => renderLoadingForButton(false, popupChangeAvatar));
 }
 function onChangeInfoProfile(nameInput, jobInput) {
   changeInfoProfile(nameInput, jobInput)
-    .then(() => closePopup(popupEdit, false))
+    .then(() => closePopup(popupEdit))
     .catch((err) => console.log(`Ошибка при изменении данных: ${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupEdit.querySelector(".form__button"))
-    );
+    .finally(() => renderLoadingForButton(false, popupEdit));
 }
 function onPostNewCard(
   mestoInput,
   linkInput,
   profileId,
   handelCardLikeClick,
-  onCardDelete
+  onCardDelete,
+  handelCardDeleteClick
 ) {
   addNewCard(mestoInput, linkInput)
-    .then((card) => addCard(card, profileId, handelCardLikeClick, onCardDelete))
+    .then((card) =>
+      addCard(
+        card,
+        profileId,
+        handelCardLikeClick,
+        onCardDelete,
+        handelCardDeleteClick
+      )
+    )
     .catch((err) => console.log(`Ошибка при добавлении:${err}`))
-    .finally(() =>
-      renderLoadingForButton(false, popupAdd.querySelector(".form__button"))
-    );
+    .finally(() => renderLoadingForButton(false, popupAdd));
 }
 //Валидация форм
 enableValidation({
@@ -159,11 +177,27 @@ popupChangeAvatar.addEventListener("submit", () =>
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
   openPropfilePopup();
-  openPopup(popupEdit, false);
+  openPopup(popupEdit);
 });
 buttonAdd.addEventListener("click", function () {
-  openPopup(popupAdd, false);
+  openPopup(popupAdd);
 });
 buttonChangeAvatar.addEventListener("click", function () {
-  openPopup(popupChangeAvatar, false);
+  openPopup(popupChangeAvatar);
+});
+//Обработка закрытия по крестику
+buttonClosePopupEdit.addEventListener("click", function () {
+  closePopup(popupEdit);
+});
+buttonClosePopupAdd.addEventListener("click", function () {
+  closePopup(popupAdd);
+});
+buttonClosePopupImg.addEventListener("click", function () {
+  closePopup(popupImg);
+});
+buttonClosePopupChange.addEventListener("click", function () {
+  closePopup(popupChangeAvatar);
+});
+buttonClosePopupDelete.addEventListener("click", function () {
+  closePopup(popupDelete);
 });
