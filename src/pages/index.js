@@ -1,10 +1,11 @@
 import "../pages/index.css";
+import Card from "../components/Card1";
 import {
   addCard,
   setProfileInfoOnPage,
   renderLoadingForButton,
-} from "./utils.js";
-import { enableValidation } from "./validate.js";
+} from "../src/components/utils.js";
+import { enableValidation } from "../components/validate.js";
 import {
   openPropfilePopup,
   handleProfileFormSubmit,
@@ -13,7 +14,7 @@ import {
   handleDeleteCardFormSubmit,
   openPopup,
   closePopup,
-} from "./modal.js";
+} from "../components/modal.js";
 import {
   buttonEdit,
   buttonAdd,
@@ -36,7 +37,7 @@ import {
   buttonClosePopupImg,
   buttonClosePopupChange,
   buttonClosePopupDelete,
-} from "./utils/constants.js";
+} from "../components/utils/constants.js";
 import {
   getListCards,
   getInfoProfileFromServer,
@@ -46,8 +47,9 @@ import {
   addNewCard,
   deleteCard,
   changeAvatar,
-} from "./api.js";
-import { updateCardLikeIcon, handleDeleteElement } from "./card.js";
+} from "../components/api.js";
+import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
+import Card from "../components/Card1.js";
 //Получение данных о пользователе
 const getInfoProfile = () => {
   return getInfoProfileFromServer()
@@ -201,3 +203,14 @@ buttonClosePopupChange.addEventListener("click", function () {
 buttonClosePopupDelete.addEventListener("click", function () {
   closePopup(popupDelete);
 });
+
+const testCard = new Card(
+  {
+    name: "test",
+    link: "https://i.pinimg.com/736x/95/30/41/953041070f000d45c05c912005f63724.jpg",
+    likes: "[{},{},{}]",
+  },
+  profileId,
+  "elem-template"
+);
+console.log(testCard);
