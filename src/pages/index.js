@@ -5,7 +5,7 @@ import {
   setProfileInfoOnPage,
   renderLoadingForButton,
 } from "../components/utils/utils.js";
-import { enableValidation } from "../components/validate.js";
+// import { enableValidation } from "../components/validate.js";
 import {
   openPropfilePopup,
   handleProfileFormSubmit,
