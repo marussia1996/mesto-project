@@ -37,6 +37,8 @@ import {
   buttonClosePopupImg,
   buttonClosePopupChange,
   buttonClosePopupDelete,
+  validateSelector,
+  formEdit,
 } from "../components/utils/constants.js";
 import {
   getListCards,
@@ -50,6 +52,7 @@ import {
 } from "../components/api.js";
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
 import Api from "../components/Api1.js";
+import FormValidator from "../components/FormValidator1";
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -64,6 +67,20 @@ window.onload = function () {
     console.log(user);
   });
 };
+//Объект валидации
+const editForm = new FormValidator(
+  {
+    formSelector: formsSelector,
+    formEditClass: formEditClass,
+    inputSelector: inputSelector,
+    submitButtonSelector: submitButtonSelector,
+    inactiveButtonClass: inactiveButtonClass,
+    inputErrorClass: inputErrorClass,
+    errorClass: errorClass,
+  },
+  formEdit
+);
+console.log(editForm);
 
 //Получение данных о пользователе
 const getInfoProfile = () => {
@@ -175,15 +192,15 @@ function onPostNewCard(
     .finally(() => renderLoadingForButton(false, popupAdd));
 }
 //Валидация форм
-enableValidation({
-  formSelector: formsSelector,
-  formEditClass: formEditClass,
-  inputSelector: inputSelector,
-  submitButtonSelector: submitButtonSelector,
-  inactiveButtonClass: inactiveButtonClass,
-  inputErrorClass: inputErrorClass,
-  errorClass: errorClass,
-});
+// enableValidation({
+//   formSelector: formsSelector,
+//   formEditClass: formEditClass,
+//   inputSelector: inputSelector,
+//   submitButtonSelector: submitButtonSelector,
+//   inactiveButtonClass: inactiveButtonClass,
+//   inputErrorClass: inputErrorClass,
+//   errorClass: errorClass,
+// });
 //События отправки форм
 popupEdit.addEventListener("submit", () =>
   handleProfileFormSubmit(onChangeInfoProfile)
@@ -195,6 +212,7 @@ popupChangeAvatar.addEventListener("submit", () =>
 buttonEdit.addEventListener("click", function () {
   openPropfilePopup();
   openPopup(popupEdit);
+  editForm.enableValidation();
 });
 buttonAdd.addEventListener("click", function () {
   openPopup(popupAdd);

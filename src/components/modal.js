@@ -65,9 +65,9 @@ export function handleAddCardFormSubmit(onPostNewCard) {
   onPostNewCard(mestoInput, linkInput);
   closePopup(popupAdd);
   formAdd.reset();
-  toggleButtonState(inputList, buttonElement, {
-    inactiveButtonClass: "form__button_inactive",
-  });
+  // toggleButtonState(inputList, buttonElement, {
+  //   inactiveButtonClass: "form__button_inactive",
+  // });
 }
 export function handleDeleteCardFormSubmit(idCard, cardElement, onCardDelete) {
   onCardDelete(popupDelete, cardElement, idCard);
@@ -82,7 +82,7 @@ export function handleChangeAvatarFormSubmit(onChangeAvatar) {
   const buttonElement = formChangeAvatar.querySelector(".form__button");
   closePopup(popupChangeAvatar);
   formChangeAvatar.reset();
-  toggleButtonState(inputList, buttonElement, {
-    inactiveButtonClass: "form__button_inactive",
-  });
+  // toggleButtonState(inputList, buttonElement, {
+  //   inactiveButtonClass: "form__button_inactive",
+  // });
 }
