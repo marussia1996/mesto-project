@@ -50,8 +50,8 @@ export default class FormValidator {
     this._setEventListeners();
   }
   //Проверка валидности всех полей
-  _hasInvalidInput(inputList) {
-    return inputList.some((input) => {
+  _hasInvalidInput() {
+    return this._inputList.some((input) => {
       return !input.validity.valid;
     });
   }
@@ -65,12 +65,12 @@ export default class FormValidator {
   }
   //Состояние кнопки
   toggleButtonState() {
-    if (this._hasInvalidInput(this.inputList)) {
-      this.buttonElement.classList.add(this._inactiveButtonClass);
-      this.buttonElement.setAttribute("disabled", "disabled");
+    if (this._hasInvalidInput()) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.setAttribute("disabled", "disabled");
     } else {
-      this.buttonElement.classList.remove(this._inactiveButtonClass);
-      this.buttonElement.removeAttribute("disabled");
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.removeAttribute("disabled");
     }
   }
   //Добавление обработчика на поля
@@ -84,10 +84,11 @@ export default class FormValidator {
     if (!this._formElement.classList.contains(this._formEditClass)) {
       this.toggleButtonState();
     }
+    let that = this;
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", function () {
-        this.toggleButtonState();
-        // this._checkInputValidity();
+        that.toggleButtonState();
+        that._checkInputValidity(inputElement);
       });
     });
   }
