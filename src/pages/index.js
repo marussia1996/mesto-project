@@ -1,5 +1,5 @@
 import "../pages/index.css";
-import Card from "../components/Card1";
+import Card from "../components/Card1.js";
 import {
   addCard,
   setProfileInfoOnPage,
