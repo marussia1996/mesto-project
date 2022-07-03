@@ -49,6 +49,21 @@ import {
   changeAvatar,
 } from "../components/api.js";
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
+import Api from "../components/Api1.js";
+//Объект Апи
+const api = new Api({
+  baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
+  headers: {
+    Authorization: "faedd00d-3d28-4943-bdc6-39d59e46ebad",
+    "Content-Type": "application/json",
+  },
+});
+
+window.onload = function () {
+  api.getInfoProfileFromServer().then((user) => {
+    console.log(user);
+  });
+};
 
 //Получение данных о пользователе
 const getInfoProfile = () => {
@@ -206,11 +221,17 @@ buttonClosePopupDelete.addEventListener("click", function () {
 
 const testCard = new Card(
   {
-    name: "test",
-    link: "https://i.pinimg.com/736x/95/30/41/953041070f000d45c05c912005f63724.jpg",
-    likes: "[{},{},{}]",
+    name: "Test",
+    link: "https://images.unsplash.com/photo-1647148559169-ba5c41fc06ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+    countLikes: 4,
+    handelCardClick: (name, link) => {
+      openPopup(popupImg);
+      image.src = link;
+      image.alt = name;
+      signature.textContent = name;
+    },
   },
-  profileId,
+  0,
   "elem-template"
 );
 console.log(testCard);
