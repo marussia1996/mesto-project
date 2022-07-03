@@ -1,10 +1,10 @@
 export default class Card {
-  constructor({ name, link, likes }, profileId, tempate) {
+  constructor({ name, link, likes }, profileId, template) {
     this._name = name;
     this._link = link;
     this._likes = likes;
     this._profileId = profileId;
-    this._cardTemplate = tempate;
+    this._cardTemplate = template;
   }
   _getTemplate() {
     return document

@@ -4,7 +4,7 @@ import {
   addCard,
   setProfileInfoOnPage,
   renderLoadingForButton,
-} from "../src/components/utils.js";
+} from "../components/utils/utils.js";
 import { enableValidation } from "../components/validate.js";
 import {
   openPropfilePopup,
@@ -49,7 +49,7 @@ import {
   changeAvatar,
 } from "../components/api.js";
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
-import Card from "../components/Card1.js";
+
 //Получение данных о пользователе
 const getInfoProfile = () => {
   return getInfoProfileFromServer()

@@ -1,5 +1,5 @@
-import { getCardElement, elements } from "./card.js";
-import { profileName, profileJob, profileAvatar } from "./utils/constants.js";
+import { getCardElement, elements } from "../card.js";
+import { profileName, profileJob, profileAvatar } from "../utils/constants.js";
 //Добавление карточки
 export function addCard(
   cardData,
