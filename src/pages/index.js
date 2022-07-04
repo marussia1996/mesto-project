@@ -69,10 +69,13 @@ const api = new Api({
 // Объект userInfo
 const userInfo = new UserInfo(userInfoSelectors);
 window.onload = function () {
-  api.getInfoProfileFromServer().then((user) => {
-    userInfo.setUserInfo(user);
-    console.log(user);
-  });
+  api
+    .getInfoProfileFromServer()
+    .then((user) => {
+      userInfo.setUserInfo(user);
+      // console.log(user);
+    })
+    .catch((err) => console.log(`Ошибка :${err}`));
 };
 //Объекты валидации форм
 const editForm = new FormValidator(

@@ -32,5 +32,16 @@ export default class Popup {
       .addEventListener("click", () => {
         this.closePopup();
       });
+
+    //мне ревьюер посоветовал так сделать закрытие на крестик и оверлэй
+    //проверить бы
+    // this._popup.addEventListener("mousedown", (evt) => {
+    //   if (evt.target.classList.contains("popup")) {
+    //     this.closePopup();
+    //   }
+    //   if (evt.target.classList.contains("popup__toggle")) {
+    //     this.closePopup();
+    //   }
+    // });
   }
 }
