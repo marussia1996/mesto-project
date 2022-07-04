@@ -40,6 +40,7 @@ import {
   formAdd,
   formEdit,
   formChangeAvatar,
+  userInfoSelectors,
 } from "../components/utils/constants.js";
 import {
   getListCards,
@@ -66,10 +67,7 @@ const api = new Api({
 });
 
 // Объект userInfo
-const userInfo = new UserInfo({
-  nameSelector: ".form__item_info_name",
-  aboutSelector: ".form__item_info_job",
-});
+const userInfo = new UserInfo(userInfoSelectors);
 window.onload = function () {
   api.getInfoProfileFromServer().then((user) => {
     userInfo.setUserInfo(user);

@@ -62,3 +62,8 @@ export const apiConfig = {
     "Content-Type": "application/json",
   },
 };
+export const userInfoSelectors = {
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__job",
+  avatarSelector: ".profile__avatar",
+};
