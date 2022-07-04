@@ -37,8 +37,9 @@ import {
   buttonClosePopupImg,
   buttonClosePopupChange,
   buttonClosePopupDelete,
-  validateSelector,
+  formAdd,
   formEdit,
+  formChangeAvatar,
 } from "../components/utils/constants.js";
 import {
   getListCards,
@@ -67,7 +68,7 @@ window.onload = function () {
     console.log(user);
   });
 };
-//Объект валидации
+//Объекты валидации форм
 const editForm = new FormValidator(
   {
     formSelector: formsSelector,
@@ -81,6 +82,32 @@ const editForm = new FormValidator(
   formEdit
 );
 console.log(editForm);
+const addForm = new FormValidator(
+  {
+    formSelector: formsSelector,
+    formEditClass: formEditClass,
+    inputSelector: inputSelector,
+    submitButtonSelector: submitButtonSelector,
+    inactiveButtonClass: inactiveButtonClass,
+    inputErrorClass: inputErrorClass,
+    errorClass: errorClass,
+  },
+  formAdd
+);
+console.log(addForm);
+const changeForm = new FormValidator(
+  {
+    formSelector: formsSelector,
+    formEditClass: formEditClass,
+    inputSelector: inputSelector,
+    submitButtonSelector: submitButtonSelector,
+    inactiveButtonClass: inactiveButtonClass,
+    inputErrorClass: inputErrorClass,
+    errorClass: errorClass,
+  },
+  formChangeAvatar
+);
+console.log(changeForm);
 
 //Получение данных о пользователе
 const getInfoProfile = () => {
