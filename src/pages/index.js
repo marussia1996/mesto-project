@@ -54,6 +54,7 @@ import {
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
 import Api from "../components/Api1.js";
 import FormValidator from "../components/FormValidator1";
+import UserInfo from "../components/UserInfo";
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -63,8 +64,14 @@ const api = new Api({
   },
 });
 
+// Объект userInfo
+const userInfo = new UserInfo({
+  nameSelector: ".form__item_info_name",
+  aboutSelector: ".form__item_info_job",
+});
 window.onload = function () {
   api.getInfoProfileFromServer().then((user) => {
+    userInfo.setUserInfo(user);
     console.log(user);
   });
 };
