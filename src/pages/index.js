@@ -243,9 +243,11 @@ buttonEdit.addEventListener("click", function () {
 });
 buttonAdd.addEventListener("click", function () {
   openPopup(popupAdd);
+  addForm.enableValidation();
 });
 buttonChangeAvatar.addEventListener("click", function () {
   openPopup(popupChangeAvatar);
+  changeForm.enableValidation();
 });
 //Обработка закрытия по крестику
 buttonClosePopupEdit.addEventListener("click", function () {

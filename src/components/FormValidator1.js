@@ -76,7 +76,7 @@ export default class FormValidator {
       this._submitButtonSelector
     );
     if (!this._formElement.classList.contains(this._formEditClass)) {
-      this.toggleButtonState();
+      this.toggleButtonState(buttonElement, inputList);
     }
     inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
