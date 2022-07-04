@@ -53,8 +53,9 @@ import {
 } from "../components/api.js";
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
 import Api from "../components/Api1.js";
-import FormValidator from "../components/FormValidator1";
-import UserInfo from "../components/UserInfo";
+import FormValidator from "../components/FormValidator1.js";
+import UserInfo from "../components/UserInfo.js";
+import Popup from "../components/Popup.js";
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -115,6 +116,10 @@ const changeForm = new FormValidator(
   formChangeAvatar
 );
 console.log(changeForm);
+//Объект попапа
+const pop = new Popup(".popup_type_edit");
+// pop.openPopup();
+// pop.setEventListeners();
 
 //Получение данных о пользователе
 const getInfoProfile = () => {
