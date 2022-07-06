@@ -5,5 +5,5 @@
   display: grid;
   row-gap: 32px;
   grid-template-rows: max-content;
-  padding: 34px 36px 36px;
+  padding-bottom: 36px;
 }
