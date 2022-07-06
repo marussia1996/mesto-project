@@ -104,15 +104,15 @@ api
   })
   .catch((err) => console.log(err));
 
-window.onload = function () {
-  api
-    .getInfoProfileFromServer()
-    .then((user) => {
-      console.log(user);
-      userInfo.setUserInfo(user);
-    })
-    .catch((err) => console.log(`Ошибка получения данных:${err}`));
-};
+// window.onload = function () {
+//   api
+//     .getInfoProfileFromServer()
+//     .then((user) => {
+//       console.log(user);
+//       userInfo.setUserInfo(user);
+//     })
+//     .catch((err) => console.log(`Ошибка получения данных:${err}`));
+// };
 //Объекты валидации форм
 const editForm = new FormValidator({ selectors: validateSelectors }, formEdit);
 console.log(editForm);

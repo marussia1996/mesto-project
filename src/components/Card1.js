@@ -5,6 +5,7 @@ export default class Card {
     this._likes = data.likes;
     this._handleCardClick = handleCardClick;
     this._profileId = profileId;
+    this._ownerId = data.owner._id;
     this._cardTemplate = template;
   }
   _getTemplate() {
@@ -33,6 +34,13 @@ export default class Card {
   _isLikedByMe() {
     return this._likes.some((like) => like._id === this._profileId);
   }
+
+  _updateTrashIcon() {
+    if (this._profileId !== this._ownerId) {
+      this._element.querySelector(".element__delete").remove();
+    }
+  }
+
   _updateCardLikeIcon() {
     if (this._isLikedByMe()) {
       this._element
@@ -50,6 +58,7 @@ export default class Card {
     this._element = this._getTemplate();
     this._updateCardLikeIcon();
     this._setEventListeners();
+    this._updateTrashIcon();
     this._element.querySelector(".element__text").textContent = this._name;
     this._element.querySelector(".element__image").src = this._link;
     this._element.querySelector(".element__image").alt = this._name;
