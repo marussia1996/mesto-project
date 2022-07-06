@@ -20,7 +20,7 @@ export default class Popup {
 
   setEventListeners() {
     this._popup.addEventListener('click', evt => { // если кликнутый элемент содержит написанный класс - закрой попап
-      if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('popup__close-button_general'))) {
+      if ((evt.target.classList.contains('popup_opened')) || (evt.target.classList.contains('popup__toggle'))) {
         this.close(); // закрытие по оверлею или нажатию на Х
       };
     });
