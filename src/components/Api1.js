@@ -18,6 +18,11 @@ export default class Api {
       headers: this._apiConfig.headers,
     }).then(this._getResponse);
   }
+
+  renderUserAndCards() {
+    return Promise.all([this.getInfoProfileFromServer(), this.getListCards()]);
+  }
+
   changeInfoProfile(nameInput, jobInput) {
     return fetch(`${this._apiConfig.baseUrl}/users/me`, {
       method: "PATCH",

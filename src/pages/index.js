@@ -5,7 +5,7 @@ import {
   setProfileInfoOnPage,
   renderLoadingForButton,
 } from "../components/utils/utils.js";
-// import { enableValidation } from "../components/validate.js";
+// import { enableValidation } from "../components/validate.js";;
 import {
   openPropfilePopup,
   handleProfileFormSubmit,
@@ -57,6 +57,7 @@ import Api from "../components/Api1.js";
 import FormValidator from "../components/FormValidator1.js";
 import UserInfo from "../components/UserInfo.js";
 import Popup from "../components/Popup.js";
+import Section from "../components/Section";
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -68,6 +69,32 @@ const api = new Api({
 
 // Объект userInfo
 const userInfo = new UserInfo({ selectors: userInfoSelectors });
+
+api
+  .renderUserAndCards()
+  .then(([user, data]) => {
+    userInfo.setUserInfo(user);
+    const cardsList = new Section(
+      {
+        items: data,
+        renderer: (item) => {
+          console.log("item:");
+          console.log(item);
+          const card = new Card(
+            { data: item, handleCardClick: () => {} },
+            user._id,
+            "elem-template"
+          );
+          const cardElement = card.generate();
+          cardsList.addItem(cardElement);
+        },
+      },
+      ".elements"
+    );
+    cardsList.renderItems();
+  })
+  .catch((err) => console.log(err));
+
 window.onload = function () {
   api
     .getInfoProfileFromServer()
@@ -137,36 +164,36 @@ const getInfoProfile = () => {
       console.log(`Не удалось получить данные пользователя: ${err}`);
     });
 };
-Promise.all([getInfoProfile(), getListCards()])
-  .then(([profileInfo, cardsList]) => {
-    //Заполнение данных пользователя
-    setProfileInfoOnPage(profileInfo);
-    //Заполнение страницы карточками
-    cardsList.reverse().forEach((cardData) => {
-      addCard(
-        cardData,
-        profileInfo.profileId,
-        handelCardLikeClick,
-        onCardDelete,
-        handelCardDeleteClick
-      );
-    });
-    popupAdd.addEventListener("submit", () => {
-      handleAddCardFormSubmit((mestoInput, linkInput) =>
-        onPostNewCard(
-          mestoInput,
-          linkInput,
-          profileInfo.profileId,
-          handelCardLikeClick,
-          onCardDelete,
-          handelCardDeleteClick
-        )
-      );
-    });
-  })
-  .catch((err) =>
-    console.log(`Ошибка при получении данных пользователя: ${err}`)
-  );
+// Promise.all([getInfoProfile(), getListCards()])
+//   .then(([profileInfo, cardsList]) => {
+//     //Заполнение данных пользователя
+//     setProfileInfoOnPage(profileInfo);
+//     //Заполнение страницы карточками
+//     cardsList.reverse().forEach((cardData) => {
+//       addCard(
+//         cardData,
+//         profileInfo.profileId,
+//         handelCardLikeClick,
+//         onCardDelete,
+//         handelCardDeleteClick
+//       );
+//     });
+//     popupAdd.addEventListener("submit", () => {
+//       handleAddCardFormSubmit((mestoInput, linkInput) =>
+//         onPostNewCard(
+//           mestoInput,
+//           linkInput,
+//           profileInfo.profileId,
+//           handelCardLikeClick,
+//           onCardDelete,
+//           handelCardDeleteClick
+//         )
+//       );
+//     });
+//   })
+//   .catch((err) =>
+//     console.log(`Ошибка при получении данных пользователя: ${err}`)
+//   );
 function handelCardLikeClick(card, cardLikeBtn, cardData, profileId) {
   if (cardLikeBtn.classList.contains("element__like_active")) {
     rejectLike(cardData._id)
@@ -278,20 +305,3 @@ buttonClosePopupChange.addEventListener("click", function () {
 buttonClosePopupDelete.addEventListener("click", function () {
   closePopup(popupDelete);
 });
-
-const testCard = new Card(
-  {
-    name: "Test",
-    link: "https://images.unsplash.com/photo-1647148559169-ba5c41fc06ed?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-    countLikes: 4,
-    handelCardClick: (name, link) => {
-      openPopup(popupImg);
-      image.src = link;
-      image.alt = name;
-      signature.textContent = name;
-    },
-  },
-  0,
-  "elem-template"
-);
-console.log(testCard);
