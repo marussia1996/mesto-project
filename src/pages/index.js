@@ -58,6 +58,7 @@ import Api from "../components/Api1.js";
 import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Popup from "../components/Popup.js";
+import PopupWithImage from "../components/PopupWithImage";
 import Section from "../components/Section";
 //Объект Апи
 const api = new Api({
@@ -71,6 +72,8 @@ const api = new Api({
 // Объект userInfo
 const userInfo = new UserInfo({ selectors: userInfoSelectors });
 
+const popupImage = new PopupWithImage(".popup_type_image");
+
 api
   .renderUserAndCards()
   .then(([user, data]) => {
@@ -82,7 +85,12 @@ api
           console.log("item:");
           console.log(item);
           const card = new Card(
-            { data: item, handleCardClick: () => {} },
+            {
+              data: item,
+              handleCardClick: () => {
+                popupImage.open(item);
+              },
+            },
             user._id,
             "elem-template"
           );

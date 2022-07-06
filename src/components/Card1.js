@@ -3,7 +3,7 @@ export default class Card {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
-    this.handleCardClick = handleCardClick;
+    this._handleCardClick = handleCardClick;
     this._profileId = profileId;
     this._cardTemplate = template;
   }
@@ -27,7 +27,7 @@ export default class Card {
     this._element
       .querySelector(".element__image")
       .addEventListener("click", () => {
-        handleCardClick;
+        this._handleCardClick();
       });
   }
   _isLikedByMe() {
