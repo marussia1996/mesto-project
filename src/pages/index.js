@@ -67,15 +67,15 @@ const api = new Api({
 });
 
 // Объект userInfo
-const userInfo = new UserInfo(userInfoSelectors);
+const userInfo = new UserInfo({ selectors: userInfoSelectors });
 window.onload = function () {
   api
     .getInfoProfileFromServer()
     .then((user) => {
+      console.log(user);
       userInfo.setUserInfo(user);
-      // console.log(user);
     })
-    .catch((err) => console.log(`Ошибка :${err}`));
+    .catch((err) => console.log(`Ошибка получения данных:${err}`));
 };
 //Объекты валидации форм
 const editForm = new FormValidator(
