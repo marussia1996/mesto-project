@@ -2,7 +2,7 @@ export default class Card {
   constructor({ data, handleCardClick }, profileId, template) {
     this._name = data.name;
     this._link = data.link;
-    this._likes = data.likes.length;
+    this._likes = data.likes;
     this.handleCardClick = handleCardClick;
     this._profileId = profileId;
     this._cardTemplate = template;
@@ -31,14 +31,10 @@ export default class Card {
       });
   }
   _isLikedByMe() {
-    return this._likes.some((like) => {
-      if (like._id === this._profileId) {
-        return true;
-      }
-    });
+    return this._likes.some((like) => like._id === this._profileId);
   }
   _updateCardLikeIcon() {
-    if (this._isLikedByMe) {
+    if (this._isLikedByMe()) {
       this._element
         .querySelector(".element__like")
         .classList.add("element__like_active");
