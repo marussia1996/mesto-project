@@ -1,5 +1,8 @@
-.page{
+.page {
   width: 100%;
   min-height: 100vh;
   background-color: #000000;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
