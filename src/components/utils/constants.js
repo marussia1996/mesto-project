@@ -67,3 +67,12 @@ export const userInfoSelectors = {
   aboutSelector: ".profile__job",
   avatarSelector: ".profile__avatar",
 };
+export const validateSelectors = {
+  formSelector: formsSelector,
+  formEditClass: formEditClass,
+  inputSelector: inputSelector,
+  submitButtonSelector: submitButtonSelector,
+  inactiveButtonClass: inactiveButtonClass,
+  inputErrorClass: inputErrorClass,
+  errorClass: errorClass,
+};

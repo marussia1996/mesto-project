@@ -40,6 +40,7 @@ import {
   formAdd,
   formEdit,
   formChangeAvatar,
+  validateSelectors,
   userInfoSelectors,
 } from "../components/utils/constants.js";
 import {
@@ -54,7 +55,7 @@ import {
 } from "../components/api.js";
 import { updateCardLikeIcon, handleDeleteElement } from "../components/card.js";
 import Api from "../components/Api1.js";
-import FormValidator from "../components/FormValidator1.js";
+import FormValidator from "../components/FormValidator.js";
 import UserInfo from "../components/UserInfo.js";
 import Popup from "../components/Popup.js";
 import Section from "../components/Section";
@@ -105,42 +106,12 @@ window.onload = function () {
     .catch((err) => console.log(`Ошибка получения данных:${err}`));
 };
 //Объекты валидации форм
-const editForm = new FormValidator(
-  {
-    formSelector: formsSelector,
-    formEditClass: formEditClass,
-    inputSelector: inputSelector,
-    submitButtonSelector: submitButtonSelector,
-    inactiveButtonClass: inactiveButtonClass,
-    inputErrorClass: inputErrorClass,
-    errorClass: errorClass,
-  },
-  formEdit
-);
+const editForm = new FormValidator({ selectors: validateSelectors }, formEdit);
 console.log(editForm);
-const addForm = new FormValidator(
-  {
-    formSelector: formsSelector,
-    formEditClass: formEditClass,
-    inputSelector: inputSelector,
-    submitButtonSelector: submitButtonSelector,
-    inactiveButtonClass: inactiveButtonClass,
-    inputErrorClass: inputErrorClass,
-    errorClass: errorClass,
-  },
-  formAdd
-);
+const addForm = new FormValidator({ selectors: validateSelectors }, formAdd);
 console.log(addForm);
 const changeForm = new FormValidator(
-  {
-    formSelector: formsSelector,
-    formEditClass: formEditClass,
-    inputSelector: inputSelector,
-    submitButtonSelector: submitButtonSelector,
-    inactiveButtonClass: inactiveButtonClass,
-    inputErrorClass: inputErrorClass,
-    errorClass: errorClass,
-  },
+  { selectors: validateSelectors },
   formChangeAvatar
 );
 console.log(changeForm);
