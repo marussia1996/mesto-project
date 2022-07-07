@@ -94,10 +94,12 @@ api
                 if (card._isLikedByMe()) {
                   console.log("наш");
                   api.rejectLike(item._id).then((res) => {
+                    card._likes = res.likes;
                     card._updateCardLikeIcon();
                   });
                 } else {
                   api.setLike(item._id).then((res) => {
+                    card._likes = res.likes;
                     card._updateCardLikeIcon();
                   });
                   console.log("не наш");
