@@ -1,9 +1,10 @@
 export default class Card {
-  constructor({ data, handleCardClick }, profileId, template) {
+  constructor({ data, handleCardClick, handleLikeClick }, profileId, template) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._handleCardClick = handleCardClick;
+    this._handleLikeClick = handleLikeClick;
     this._profileId = profileId;
     this._ownerId = data.owner._id;
     this._cardTemplate = template;
@@ -18,7 +19,8 @@ export default class Card {
     this._element
       .querySelector(".element__like")
       .addEventListener("click", () => {
-        this._onLikeClick();
+        // console.log(this._name);
+        this._handleLikeClick();
       });
     this._element
       .querySelector(".element__delete")
@@ -46,13 +48,16 @@ export default class Card {
       this._element
         .querySelector(".element__like")
         .classList.add("element__like_active");
+      // console.log("наш");
     } else {
       this._element
         .querySelector(".element__like")
         .classList.remove("element__like_active");
+      // console.log("не наш");
     }
     this._element.querySelector(".element__counter-likes").textContent =
       this._likes.length;
+    console.log("update");
   }
   generate() {
     this._element = this._getTemplate();

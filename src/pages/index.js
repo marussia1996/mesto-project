@@ -82,13 +82,26 @@ api
       {
         items: data,
         renderer: (item) => {
-          console.log("item:");
-          console.log(item);
+          // console.log("item:");
+          // console.log(item);
           const card = new Card(
             {
               data: item,
               handleCardClick: () => {
                 popupImage.open(item);
+              },
+              handleLikeClick: () => {
+                if (card._isLikedByMe()) {
+                  console.log("наш");
+                  api.rejectLike(item._id).then((res) => {
+                    card._updateCardLikeIcon();
+                  });
+                } else {
+                  api.setLike(item._id).then((res) => {
+                    card._updateCardLikeIcon();
+                  });
+                  console.log("не наш");
+                }
               },
             },
             user._id,
@@ -104,15 +117,6 @@ api
   })
   .catch((err) => console.log(err));
 
-// window.onload = function () {
-//   api
-//     .getInfoProfileFromServer()
-//     .then((user) => {
-//       console.log(user);
-//       userInfo.setUserInfo(user);
-//     })
-//     .catch((err) => console.log(`Ошибка получения данных:${err}`));
-// };
 //Объекты валидации форм
 const editForm = new FormValidator({ selectors: validateSelectors }, formEdit);
 console.log(editForm);
