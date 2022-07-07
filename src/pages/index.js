@@ -81,7 +81,7 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
     .addNewCard(inputs.name, inputs.link)
     .then((res) => {
       console.log(res);
-      let testCard = new Card(
+      const card = new Card(
         {
           data: res,
           handleCardClick: () => {
@@ -114,7 +114,7 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
         res.owner._id,
         "elem-template"
       );
-      const cardElement = testCard.generate();
+      const cardElement = card.generate();
       cardSection.prependElement(cardElement);
 
       console.log(cardSection);
