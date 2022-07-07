@@ -1,9 +1,14 @@
 export default class Card {
-  constructor({ data, handleCardClick, handleLikeClick }, profileId, template) {
+  constructor(
+    { data, handleCardClick, handleCardDelete, handleLikeClick },
+    profileId,
+    template
+  ) {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
     this._handleLikeClick = handleLikeClick;
     this._profileId = profileId;
     this._ownerId = data.owner._id;
@@ -25,7 +30,7 @@ export default class Card {
     this._element
       .querySelector(".element__delete")
       .addEventListener("click", () => {
-        this._onDeleteClick();
+        this._handleCardDelete();
       });
     this._element
       .querySelector(".element__image")
@@ -57,7 +62,7 @@ export default class Card {
     }
     this._element.querySelector(".element__counter-likes").textContent =
       this._likes.length;
-    console.log("update");
+    // console.log("update");
   }
   generate() {
     this._element = this._getTemplate();
