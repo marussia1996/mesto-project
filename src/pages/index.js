@@ -62,6 +62,42 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import PopupWithConfirm from "../components/PopupWithConfirm";
 import PopupWithForm from "../components/PopupWithForm.js";
+
+function createNewCard(item, ownerId) {
+  const card = new Card(
+    {
+      data: item,
+      handleCardClick: () => {
+        popupImage.open(item);
+      },
+      handleCardDelete: () => {
+        popupDelete.open(item._id);
+      },
+      rejectLike: (setLikes, updateLike) => {
+        api
+          .rejectLike(item._id)
+          .then((item) => {
+            setLikes.bind(card)(item.likes);
+            updateLike.bind(card)();
+          })
+          .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
+      },
+      setLike: (setLikes, updateLike) => {
+        api
+          .setLike(item._id)
+          .then((item) => {
+            setLikes.bind(card)(item.likes);
+            updateLike.bind(card)();
+          })
+          .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
+      },
+    },
+    ownerId,
+    "elem-template"
+  );
+  return card.generate();
+}
+
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -75,48 +111,27 @@ let cardSection;
 const userInfo = new UserInfo({ selectors: userInfoSelectors });
 
 const popupImage = new PopupWithImage(".popup_type_image");
-const popupDelete = new PopupWithForm(".popup_type_delete", () => {});
+const popupDelete = new PopupWithConfirm(".popup_type_delete", {
+  callbackSubmit: (id) => {
+    console.log(id);
+    api
+      .deleteCard(id)
+      .then((res) => {
+        popupDelete.close();
+
+        // closePopup(popup);
+        // handleDeleteElement(cardElement.closest(".element"));
+      })
+      .catch((err) => console.log(`Ошибка при удалении: ${err}`));
+  },
+});
+popupDelete.setEventListeners();
 const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
   api
     .addNewCard(inputs.name, inputs.link)
     .then((res) => {
       console.log(res);
-      const card = new Card(
-        {
-          data: res,
-          handleCardClick: () => {
-            popupImage.open(res);
-          },
-          handleCardDelete: () => {
-            popupDelete.open();
-          },
-          rejectLike: (setLikes, updateLike) => {
-            api
-              .rejectLike(res._id)
-              .then((res) => {
-                setLikes.bind(card)(res.likes);
-                updateLike.bind(card)();
-              })
-              .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
-          },
-          setLike: (setLikes, updateLike) => {
-            api
-              .setLike(res._id)
-              .then((res) => {
-                setLikes.bind(card)(res.likes);
-                updateLike.bind(card)();
-              })
-              .catch((err) =>
-                console.log(`Ошибка при установке лайка: ${err}`)
-              );
-          },
-        },
-        res.owner._id,
-        "elem-template"
-      );
-      const cardElement = card.generate();
-      cardSection.prependElement(cardElement);
-
+      cardSection.prependElement(createNewCard(res, res.owner._id));
       console.log(cardSection);
 
       // cardSection.renderItems();
@@ -135,43 +150,7 @@ api
       {
         items: data,
         renderer: (item) => {
-          const card = new Card(
-            {
-              data: item,
-              handleCardClick: () => {
-                popupImage.open(item);
-              },
-              handleCardDelete: () => {
-                popupDelete.open();
-              },
-              rejectLike: (setLikes, updateLike) => {
-                api
-                  .rejectLike(item._id)
-                  .then((res) => {
-                    setLikes.bind(card)(res.likes);
-                    updateLike.bind(card)();
-                  })
-                  .catch((err) =>
-                    console.log(`Ошибка при снятии лайка: ${err}`)
-                  );
-              },
-              setLike: (setLikes, updateLike) => {
-                api
-                  .setLike(item._id)
-                  .then((res) => {
-                    setLikes.bind(card)(res.likes);
-                    updateLike.bind(card)();
-                  })
-                  .catch((err) =>
-                    console.log(`Ошибка при установке лайка: ${err}`)
-                  );
-              },
-            },
-            user._id,
-            "elem-template"
-          );
-          const cardElement = card.generate();
-          cardSection.appendElement(cardElement);
+          cardSection.appendElement(createNewCard(item, user._id));
         },
       },
       ".elements"
