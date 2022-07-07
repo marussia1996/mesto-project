@@ -43,9 +43,6 @@ export default class Card {
       });
   }
   _isLikedByMe() {
-    // console.log("here");
-    // console.log(likes);
-    console.log(this._likes);
     return this._likes.some((like) => like._id === this._profileId);
   }
 
@@ -60,9 +57,6 @@ export default class Card {
   }
 
   _updateCardLikeIcon() {
-    // console.log("here2");
-    // console.log(likes);
-    console.log(this);
     if (this._isLikedByMe()) {
       this._element
         .querySelector(".element__like")
