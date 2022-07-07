@@ -82,26 +82,33 @@ api
       {
         items: data,
         renderer: (item) => {
-          // console.log("item:");
-          // console.log(item);
           const card = new Card(
             {
               data: item,
               handleCardClick: () => {
                 popupImage.open(item);
               },
-              handleLikeClick: () => {
-                if (card._isLikedByMe()) {
-                  console.log("наш");
-                  api.rejectLike(item._id).then((res) => {
-                    card._updateCardLikeIcon();
-                  });
-                } else {
-                  api.setLike(item._id).then((res) => {
-                    card._updateCardLikeIcon();
-                  });
-                  console.log("не наш");
-                }
+              rejectLike: (setLikes, updateLike) => {
+                api
+                  .rejectLike(item._id)
+                  .then((res) => {
+                    setLikes.bind(card)(res.likes);
+                    updateLike.bind(card)();
+                  })
+                  .catch((err) =>
+                    console.log(`Ошибка при снятии лайка: ${err}`)
+                  );
+              },
+              setLike: (setLikes, updateLike) => {
+                api
+                  .setLike(item._id)
+                  .then((res) => {
+                    setLikes.bind(card)(res.likes);
+                    updateLike.bind(card)();
+                  })
+                  .catch((err) =>
+                    console.log(`Ошибка при установке лайка: ${err}`)
+                  );
               },
             },
             user._id,
@@ -119,14 +126,12 @@ api
 
 //Объекты валидации форм
 const editForm = new FormValidator({ selectors: validateSelectors }, formEdit);
-console.log(editForm);
 const addForm = new FormValidator({ selectors: validateSelectors }, formAdd);
-console.log(addForm);
 const changeForm = new FormValidator(
   { selectors: validateSelectors },
   formChangeAvatar
 );
-console.log(changeForm);
+
 //Объект попапа
 const pop = new Popup(".popup_type_edit");
 // pop.openPopup();

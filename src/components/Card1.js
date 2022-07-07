@@ -1,10 +1,17 @@
 export default class Card {
-  constructor({ data, handleCardClick, handleLikeClick }, profileId, template) {
+  constructor(
+    { data, handleCardClick, rejectLike, setLike },
+    profileId,
+    template
+  ) {
+    this.data = data;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._handleCardClick = handleCardClick;
-    this._handleLikeClick = handleLikeClick;
+    //this._handleLikeClick = handleLikeClick;
+    this._rejectLike = rejectLike;
+    this._setLike = setLike;
     this._profileId = profileId;
     this._ownerId = data.owner._id;
     this._cardTemplate = template;
@@ -19,8 +26,11 @@ export default class Card {
     this._element
       .querySelector(".element__like")
       .addEventListener("click", () => {
-        // console.log(this._name);
-        this._handleLikeClick();
+        if (this._isLikedByMe()) {
+          this._rejectLike(this._setLikes, this._updateCardLikeIcon);
+        } else {
+          this._setLike(this._setLikes, this._updateCardLikeIcon);
+        }
       });
     this._element
       .querySelector(".element__delete")
@@ -34,6 +44,9 @@ export default class Card {
       });
   }
   _isLikedByMe() {
+    // console.log("here");
+    // console.log(likes);
+    console.log(this._likes);
     return this._likes.some((like) => like._id === this._profileId);
   }
 
@@ -43,21 +56,25 @@ export default class Card {
     }
   }
 
+  _setLikes(likes) {
+    this._likes = likes;
+  }
+
   _updateCardLikeIcon() {
+    // console.log("here2");
+    // console.log(likes);
+    console.log(this);
     if (this._isLikedByMe()) {
       this._element
         .querySelector(".element__like")
         .classList.add("element__like_active");
-      // console.log("наш");
     } else {
       this._element
         .querySelector(".element__like")
         .classList.remove("element__like_active");
-      // console.log("не наш");
     }
     this._element.querySelector(".element__counter-likes").textContent =
       this._likes.length;
-    console.log("update");
   }
   generate() {
     this._element = this._getTemplate();
