@@ -1,15 +1,14 @@
 export default class Card {
   constructor(
-    { data, handleCardClick, rejectLike, setLike },
+    { data, handleCardClick, handleCardDelete, rejectLike, setLike },
     profileId,
     template
   ) {
-    this.data = data;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
     this._handleCardClick = handleCardClick;
-    //this._handleLikeClick = handleLikeClick;
+    this._handleCardDelete = handleCardDelete;
     this._rejectLike = rejectLike;
     this._setLike = setLike;
     this._profileId = profileId;
@@ -35,7 +34,7 @@ export default class Card {
     this._element
       .querySelector(".element__delete")
       .addEventListener("click", () => {
-        this._onDeleteClick();
+        this._handleCardDelete();
       });
     this._element
       .querySelector(".element__image")

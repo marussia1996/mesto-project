@@ -23,7 +23,7 @@ import {
   popupAdd,
   popupChangeAvatar,
   popupImg,
-  popupDelete,
+  // popupDelete,
   formsSelector,
   formEditClass,
   inputSelector,
@@ -60,6 +60,7 @@ import UserInfo from "../components/UserInfo.js";
 import Popup from "../components/Popup.js";
 import PopupWithImage from "../components/PopupWithImage";
 import Section from "../components/Section";
+import PopupWithConfirm from "../components/PopupWithConfirm";
 //Объект Апи
 const api = new Api({
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-10",
@@ -73,6 +74,7 @@ const api = new Api({
 const userInfo = new UserInfo({ selectors: userInfoSelectors });
 
 const popupImage = new PopupWithImage(".popup_type_image");
+const popupDelete = new PopupWithConfirm(".popup_type_delete", () => {});
 
 api
   .renderUserAndCards()
@@ -87,6 +89,9 @@ api
               data: item,
               handleCardClick: () => {
                 popupImage.open(item);
+              },
+              handleCardDelete: () => {
+                popupDelete.open();
               },
               rejectLike: (setLikes, updateLike) => {
                 api
@@ -290,6 +295,6 @@ buttonClosePopupImg.addEventListener("click", function () {
 buttonClosePopupChange.addEventListener("click", function () {
   closePopup(popupChangeAvatar);
 });
-buttonClosePopupDelete.addEventListener("click", function () {
-  closePopup(popupDelete);
-});
+// buttonClosePopupDelete.addEventListener("click", function () {
+//   closePopup(popupDelete);
+// });
