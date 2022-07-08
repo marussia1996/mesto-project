@@ -42,6 +42,8 @@ import {
   formChangeAvatar,
   validateSelectors,
   userInfoSelectors,
+  formName,
+  formJob,
 } from "../components/utils/constants.js";
 import {
   getListCards,
@@ -283,10 +285,16 @@ function onPostNewCard(
 // popupChangeAvatar.addEventListener("submit", () =>
 //   handleChangeAvatarFormSubmit(onChangeAvatar)
 // );
+function renderInfoForm() {
+  const userData = userInfo.getUserInfo();
+  formName.value = userData.name;
+  formJob.value = userData.about;
+}
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
   // openPropfilePopup();
   // openPopup(popupEdit);
+  renderInfoForm();
   popupEditInfo.open();
   editForm.enableValidation();
 });
