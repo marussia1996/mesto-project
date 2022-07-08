@@ -148,7 +148,6 @@ const popupEditInfo = new PopupWithForm(
     api
       .changeInfoProfile(inputs.name, inputs.job)
       .then((res) => {
-        console.log(res);
         userInfo.setUserInfo(res);
         popupEditInfo.close();
       })
@@ -159,6 +158,24 @@ const popupEditInfo = new PopupWithForm(
   }
 );
 popupEditInfo.setEventListeners();
+
+const popupEditAvatar = new PopupWithForm(
+  ".popup_type_change-avatar",
+  (inputs, button) => {
+    api
+      .changeAvatar(inputs.link)
+      .then((res) => {
+        userInfo.setUserAvatar(res.avatar);
+        popupEditAvatar.close();
+      })
+      .catch((err) => {
+        console.log(`err+ ${err}`);
+      });
+    // .finally(() => renderLoadingForButton(false, popupEdit));
+  }
+);
+popupEditAvatar.setEventListeners();
+
 api
   .renderUserAndCards()
   .then(([user, data]) => {
@@ -256,16 +273,17 @@ function onPostNewCard(
 }
 
 //События отправки форм
-popupEdit.addEventListener("submit", () =>
-  handleProfileFormSubmit(onChangeInfoProfile)
-);
-popupChangeAvatar.addEventListener("submit", () =>
-  handleChangeAvatarFormSubmit(onChangeAvatar)
-);
+// popupEdit.addEventListener("submit", () =>
+// handleProfileFormSubmit(onChangeInfoProfile);
+// );
+// popupChangeAvatar.addEventListener("submit", () =>
+//   handleChangeAvatarFormSubmit(onChangeAvatar)
+// );
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
-  openPropfilePopup();
-  openPopup(popupEdit);
+  // openPropfilePopup();
+  // openPopup(popupEdit);
+  popupEditInfo.open();
   editForm.enableValidation();
 });
 buttonAdd.addEventListener("click", function () {
@@ -273,7 +291,8 @@ buttonAdd.addEventListener("click", function () {
   addForm.enableValidation();
 });
 buttonChangeAvatar.addEventListener("click", function () {
-  openPopup(popupChangeAvatar);
+  popupEditAvatar.open();
+  // openPopup(popupChangeAvatar);
   changeForm.enableValidation();
 });
 //Обработка закрытия по крестику
