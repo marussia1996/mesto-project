@@ -142,6 +142,23 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
     });
 });
 popupAddCard.setEventListeners();
+const popupEditInfo = new PopupWithForm(
+  ".popup_type_edit",
+  (inputs, button) => {
+    api
+      .changeInfoProfile(inputs.name, inputs.job)
+      .then((res) => {
+        console.log(res);
+        userInfo.setUserInfo(res);
+        popupEditInfo.close();
+      })
+      .catch((err) => {
+        console.log(`err+ ${err}`);
+      });
+    // .finally(() => renderLoadingForButton(false, popupEdit));
+  }
+);
+popupEditInfo.setEventListeners();
 api
   .renderUserAndCards()
   .then(([user, data]) => {
