@@ -127,6 +127,7 @@ const popupDelete = new PopupWithConfirm(".popup_type_delete", {
 });
 popupDelete.setEventListeners();
 const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
+  popupAddCard.renderLoading(true);
   api
     .addNewCard(inputs.name, inputs.link)
     .then((res) => {
@@ -139,12 +140,14 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
     })
     .catch((err) => {
       console.log(`err+ ${err}`);
-    });
+    })
+    .finally(() => popupAddCard.renderLoading(false));
 });
 popupAddCard.setEventListeners();
 const popupEditInfo = new PopupWithForm(
   ".popup_type_edit",
   (inputs, button) => {
+    popupEditInfo.renderLoading(true);
     api
       .changeInfoProfile(inputs.name, inputs.job)
       .then((res) => {
@@ -153,8 +156,8 @@ const popupEditInfo = new PopupWithForm(
       })
       .catch((err) => {
         console.log(`err+ ${err}`);
-      });
-    // .finally(() => renderLoadingForButton(false, popupEdit));
+      })
+      .finally(() => popupEditInfo.renderLoading(false));
   }
 );
 popupEditInfo.setEventListeners();
@@ -162,6 +165,7 @@ popupEditInfo.setEventListeners();
 const popupEditAvatar = new PopupWithForm(
   ".popup_type_change-avatar",
   (inputs, button) => {
+    popupEditAvatar.renderLoading(true);
     api
       .changeAvatar(inputs.link)
       .then((res) => {
@@ -170,8 +174,8 @@ const popupEditAvatar = new PopupWithForm(
       })
       .catch((err) => {
         console.log(`err+ ${err}`);
-      });
-    // .finally(() => renderLoadingForButton(false, popupEdit));
+      })
+      .finally(() => popupEditAvatar.renderLoading(false));
   }
 );
 popupEditAvatar.setEventListeners();
