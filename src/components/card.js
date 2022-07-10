@@ -1,85 +1,82 @@
-import { openPopup } from "./modal.js";
-import {
-  popupDelete,
-  popupImg,
-  elements,
-  image,
-  signature,
-} from "./utils/constants.js";
-//Функция получения шаблона карточки
-const getTemplate = () => {
-  return document
-    .querySelector("#elem-template")
-    .content.querySelector(".element")
-    .cloneNode(true);
-};
-//Удаление элемента
-export const handleDeleteElement = (element) => {
-  element.remove();
-  element = null;
-};
-//Функция передачи параметров для попапа с картинкой
-function handleCardClick(name, link) {
-  openPopup(popupImg);
-  image.src = link;
-  image.alt = name;
-  signature.textContent = name;
-}
-//Получение элемента карточки
-function getCardElement(
-  cardData,
-  profileId,
-  onLikeClick,
-  onCardDelete,
-  onDeleteClick
-) {
-  const element = getTemplate();
-  updateCardLikeIcon(element, cardData, profileId);
-  //Событие на кнопку лайка
-  element
-    .querySelector(".element__like")
-    .addEventListener("click", function () {
-      onLikeClick(element, this, cardData, profileId);
-    });
-  //Событие на кнопку удаления
-  if (cardData.owner._id === profileId) {
-    element
-      .querySelector(".element__delete")
-      .addEventListener("click", function () {
-        onDeleteClick(popupDelete, cardData._id, element, onCardDelete);
-      });
-  } else {
-    handleDeleteElement(element.querySelector(".element__delete"));
+export default class Card {
+  constructor(
+    { data, handleCardClick, handleCardDelete, rejectLike, setLike },
+    profileId,
+    template
+  ) {
+    this._name = data.name;
+    this._link = data.link;
+    this._likes = data.likes;
+    this._handleCardClick = handleCardClick;
+    this._handleCardDelete = handleCardDelete;
+    this._rejectLike = rejectLike;
+    this._setLike = setLike;
+    this._profileId = profileId;
+    this._ownerId = data.owner._id;
+    this._cardTemplate = template;
   }
-  element.querySelector(".element__text").textContent = cardData.name;
-  element.querySelector(".element__image").src = cardData.link;
-  element.querySelector(".element__image").alt = cardData.name;
-  //Событие при нажатии на картинку
-  element
-    .querySelector(".element__image")
-    .addEventListener("click", () =>
-      handleCardClick(cardData.name, cardData.link)
-    );
-  return element;
-}
-//Функция проверки лайка
-export function isLikedByMe(cardData, profileId) {
-  return cardData.likes.some((like) => {
-    if (like._id === profileId) {
-      return true;
-    }
-  });
-}
-export function updateCardLikeIcon(card, cardData, profileId) {
-  if (isLikedByMe(cardData, profileId)) {
-    card.querySelector(".element__like").classList.add("element__like_active");
-  } else {
-    card
+  _getTemplate() {
+    return document
+      .querySelector(`#${this._cardTemplate}`)
+      .content.querySelector(".element")
+      .cloneNode(true);
+  }
+  _setEventListeners() {
+    this._element
       .querySelector(".element__like")
-      .classList.remove("element__like_active");
+      .addEventListener("click", () => {
+        if (this._isLikedByMe()) {
+          this._rejectLike(this._setLikes, this._updateCardLikeIcon);
+        } else {
+          this._setLike(this._setLikes, this._updateCardLikeIcon);
+        }
+      });
+    this._element
+      .querySelector(".element__delete")
+      .addEventListener("click", () => {
+        this._handleCardDelete();
+      });
+    this._element
+      .querySelector(".element__image")
+      .addEventListener("click", () => {
+        this._handleCardClick();
+      });
   }
-  //Определение количества лайков у карточки
-  card.querySelector(".element__counter-likes").textContent =
-    cardData.likes.length;
+  _isLikedByMe() {
+    return this._likes.some((like) => like._id === this._profileId);
+  }
+
+  _updateTrashIcon() {
+    if (this._profileId !== this._ownerId) {
+      this._element.querySelector(".element__delete").remove();
+    }
+  }
+
+  _setLikes(likes) {
+    this._likes = likes;
+  }
+
+  _updateCardLikeIcon() {
+    if (this._isLikedByMe()) {
+      this._element
+        .querySelector(".element__like")
+        .classList.add("element__like_active");
+    } else {
+      this._element
+        .querySelector(".element__like")
+        .classList.remove("element__like_active");
+    }
+    this._element.querySelector(".element__counter-likes").textContent =
+      this._likes.length;
+  }
+  generate() {
+    this._element = this._getTemplate();
+    this._updateCardLikeIcon();
+    this._setEventListeners();
+    this._updateTrashIcon();
+    this._element.querySelector(".element__text").textContent = this._name;
+    this._element.querySelector(".element__image").src = this._link;
+    this._element.querySelector(".element__image").alt = this._name;
+    return this._element;
+  }
 }
-export { getCardElement, elements };
