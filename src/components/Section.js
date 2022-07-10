@@ -4,11 +4,32 @@ export default class Section {
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
   }
-  appendElement(element) {
+  //связывает item с элементом и добавляется элемент в конец
+  appendElement(element, item) {
+    item.element = element; //ссылка на элемент
     this._container.append(element);
   }
-  prependElement(element) {
+  //связывает item с элементом и добавляется элемент в начало
+  prependElement(element, item) {
+    item.element = element; //ссылка на элемент
     this._container.prepend(element);
+  }
+  prependItem(item) {
+    this._items.splice(0, 0, item); //добавление item в начало массива
+  }
+  //удаление представления карточки
+  deleteElement(element) {
+    element.remove();
+    element = null;
+  }
+  //удаление данных о карточке и ее представления
+  deleteItem(itemId) {
+    this._items.forEach((item, index) => {
+      if (item._id === itemId) {
+        this.deleteElement(item.element); //удаление представления (используяю ссылку на элемент)
+        this._items.splice(index, 1); //удаление item из массива
+      }
+    });
   }
   clear() {
     this._container.innerHTML = "";
@@ -20,23 +41,4 @@ export default class Section {
       this._renderer(item);
     });
   }
-  // renderCards = (cardsObject) => {
-  //   cardsObject.cards.forEach((item) => {
-  //     const objItem = {
-  //       card: item,
-  //       userId: cardsObject.userId,
-  //       insertMethod: cardsObject.insertMethod,
-  //     };
-  //     this._renderer(objItem);
-  //   });
-  // };
-
-  // addItem = (element, insertMethod) => {
-  //   // отображаем рендер как следует, а новую карточку добавляем в начало
-  //   if (insertMethod == "append") {
-  //     this._container.append(element);
-  //   } else {
-  //     this._container.prepend(element);
-  //   }
-  // };
 }

@@ -114,15 +114,13 @@ const userInfo = new UserInfo({ selectors: userInfoSelectors });
 
 const popupImage = new PopupWithImage(".popup_type_image");
 const popupDelete = new PopupWithConfirm(".popup_type_delete", {
-  callbackSubmit: (id) => {
-    console.log(id);
+  callbackSubmit: (idCard) => {
+    console.log(idCard);
     api
-      .deleteCard(id)
+      .deleteCard(idCard)
       .then((res) => {
         popupDelete.close();
-
-        // closePopup(popup);
-        // handleDeleteElement(cardElement.closest(".element"));
+        cardSection.deleteItem(idCard);
       })
       .catch((err) => console.log(`Ошибка при удалении: ${err}`));
   },
@@ -133,11 +131,8 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs, button) => {
   api
     .addNewCard(inputs.name, inputs.link)
     .then((res) => {
-      console.log(res);
-      cardSection.prependElement(createNewCard(res, res.owner._id));
-      console.log(cardSection);
-
-      // cardSection.renderItems();
+      cardSection.prependItem(res);
+      cardSection.prependElement(createNewCard(res, res.owner._id), res);
       popupAddCard.close();
     })
     .catch((err) => {
@@ -190,7 +185,7 @@ api
       {
         items: data,
         renderer: (item) => {
-          cardSection.appendElement(createNewCard(item, user._id));
+          cardSection.appendElement(createNewCard(item, user._id), item);
         },
       },
       ".elements"
@@ -206,11 +201,6 @@ const changeForm = new FormValidator(
   { selectors: validateSelectors },
   formChangeAvatar
 );
-
-//Объект попапа
-const pop = new Popup(".popup_type_edit");
-// pop.openPopup();
-// pop.setEventListeners();
 
 //Получение данных о пользователе
 const getInfoProfile = () => {
