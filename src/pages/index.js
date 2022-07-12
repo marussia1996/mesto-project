@@ -63,6 +63,7 @@ let cardSection;
 const userInfo = new UserInfo({ selectors: userInfoSelectors });
 
 const popupImage = new PopupWithImage(".popup_type_image");
+popupImage.setEventListeners();
 const popupDelete = new PopupWithConfirm(".popup_type_delete", {
   callbackSubmit: (idCard) => {
     console.log(idCard);
