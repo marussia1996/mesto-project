@@ -54,23 +54,31 @@ export default class FormValidator {
     }
   }
   //Состояние кнопки
-  toggleButtonState(buttonElement, inputList) {
-    if (this._hasInvalidInput(inputList)) {
-      buttonElement.classList.add(this._inactiveButtonClass);
-      buttonElement.setAttribute("disabled", "disabled");
+  _toggleButtonState() {
+    if (this._hasInvalidInput(this._inputList)) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.setAttribute("disabled", "disabled");
     } else {
-      buttonElement.classList.remove(this._inactiveButtonClass);
-      buttonElement.removeAttribute("disabled");
+      this._buttonElement.classList.remove(this._inactiveButtonClass);
+      this._buttonElement.removeAttribute("disabled");
     }
   }
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
+
   //Добавление обработчика на поля
   _setEventListeners() {
     if (!this._formElement.classList.contains(this._formEditClass)) {
-      this.toggleButtonState(this._buttonElement, this._inputList);
+      this._toggleButtonState();
     }
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this.toggleButtonState(this._buttonElement, this._inputList);
+        this._toggleButtonState();
         this._checkInputValidity(inputElement);
       });
     });

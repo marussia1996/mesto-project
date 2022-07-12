@@ -66,7 +66,6 @@ const popupImage = new PopupWithImage(".popup_type_image");
 popupImage.setEventListeners();
 const popupDelete = new PopupWithConfirm(".popup_type_delete", {
   callbackSubmit: (idCard) => {
-    console.log(idCard);
     api
       .deleteCard(idCard)
       .then((res) => {
@@ -157,24 +156,37 @@ api
   })
   .catch((err) => console.log(err));
 
-//Объекты валидации форм
-const editForm = new FormValidator({ selectors: validateSelectors }, formEdit);
-const addForm = new FormValidator({ selectors: validateSelectors }, formAdd);
-const changeForm = new FormValidator(
-  { selectors: validateSelectors },
-  formChangeAvatar
-);
+//Валидация
+const formValidators = {};
+
+// Включение валидации
+const enableValidation = ({ selectors }) => {
+  const formList = Array.from(
+    document.querySelectorAll(selectors.formSelector)
+  );
+  formList.forEach((formElement) => {
+    const validator = new FormValidator({ selectors: selectors }, formElement);
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute("name");
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation({ selectors: validateSelectors });
+
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
   popupEditInfo.setInputValues(userInfo.getUserInfo());
   popupEditInfo.open();
-  editForm.enableValidation();
+  formValidators["edit-profile"].resetValidation();
 });
 buttonAdd.addEventListener("click", function () {
   popupAddCard.open();
-  addForm.enableValidation();
+  formValidators["add-mesto"].resetValidation();
 });
 buttonChangeAvatar.addEventListener("click", function () {
   popupEditAvatar.open();
-  changeForm.enableValidation();
+  formValidators["change-avatar"].resetValidation();
 });
