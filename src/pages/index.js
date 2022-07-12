@@ -95,9 +95,14 @@ popupAddCard.setEventListeners();
 const popupEditInfo = new PopupWithForm(".popup_type_edit", (inputs) => {
   popupEditInfo.renderLoading(true);
   api
-    .changeInfoProfile(inputs.name, inputs.job)
+    .changeInfoProfile(inputs.name, inputs.about)
     .then((res) => {
-      userInfo.setUserInfo(res);
+      userInfo.setUserInfo({
+        name: res.name,
+        about: res.about,
+        avatar: res.avatar,
+        _id: res._id,
+      });
       popupEditInfo.close();
     })
     .catch((err) => {
@@ -114,7 +119,12 @@ const popupEditAvatar = new PopupWithForm(
     api
       .changeAvatar(inputs.link)
       .then((res) => {
-        userInfo.setUserAvatar(res.avatar);
+        userInfo.setUserInfo({
+          name: res.name,
+          about: res.about,
+          avatar: res.avatar,
+          _id: res._id,
+        });
         popupEditAvatar.close();
       })
       .catch((err) => {
@@ -128,7 +138,12 @@ popupEditAvatar.setEventListeners();
 api
   .renderUserAndCards()
   .then(([user, data]) => {
-    userInfo.setUserInfo(user);
+    userInfo.setUserInfo({
+      name: user.name,
+      about: user.about,
+      avatar: user.avatar,
+      _id: user._id,
+    });
     cardSection = new Section(
       {
         items: data,
@@ -149,15 +164,9 @@ const changeForm = new FormValidator(
   { selectors: validateSelectors },
   formChangeAvatar
 );
-
-function renderInfoForm() {
-  const userData = userInfo.getUserInfo();
-  formName.value = userData.name;
-  formJob.value = userData.about;
-}
 // События при нажатии кнопок
 buttonEdit.addEventListener("click", function () {
-  renderInfoForm();
+  popupEditInfo.setInputValues(userInfo.getUserInfo());
   popupEditInfo.open();
   editForm.enableValidation();
 });

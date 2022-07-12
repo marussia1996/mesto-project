@@ -19,7 +19,7 @@ export default class Popup {
   }
 
   setEventListeners() {
-    this._popup.addEventListener("click", (evt) => {
+    this._popup.addEventListener("mousedown", (evt) => {
       // если кликнутый элемент содержит написанный класс - закрой попап
       if (
         evt.target.classList.contains("popup_opened") ||

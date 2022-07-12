@@ -7,6 +7,12 @@ export default class FormValidator {
     this._inputErrorClass = selectors.inputErrorClass;
     this._errorClass = selectors.errorClass;
     this._formElement = formElement;
+    this._inputList = Array.from(
+      this._formElement.querySelectorAll(this._inputSelector)
+    );
+    this._buttonElement = this._formElement.querySelector(
+      this._submitButtonSelector
+    );
   }
   //Показ ошибки
   _showInputError(inputElement, errorMessage) {
@@ -59,18 +65,12 @@ export default class FormValidator {
   }
   //Добавление обработчика на поля
   _setEventListeners() {
-    const inputList = Array.from(
-      this._formElement.querySelectorAll(this._inputSelector)
-    );
-    const buttonElement = this._formElement.querySelector(
-      this._submitButtonSelector
-    );
     if (!this._formElement.classList.contains(this._formEditClass)) {
-      this.toggleButtonState(buttonElement, inputList);
+      this.toggleButtonState(this._buttonElement, this._inputList);
     }
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
-        this.toggleButtonState(buttonElement, inputList);
+        this.toggleButtonState(this._buttonElement, this._inputList);
         this._checkInputValidity(inputElement);
       });
     });

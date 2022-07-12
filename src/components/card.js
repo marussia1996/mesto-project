@@ -22,61 +22,52 @@ export default class Card {
       .cloneNode(true);
   }
   _setEventListeners() {
-    this._element
-      .querySelector(".element__like")
-      .addEventListener("click", () => {
-        if (this._isLikedByMe()) {
-          this._rejectLike(this._setLikes, this._updateCardLikeIcon);
-        } else {
-          this._setLike(this._setLikes, this._updateCardLikeIcon);
-        }
-      });
-    this._element
-      .querySelector(".element__delete")
-      .addEventListener("click", () => {
-        this._handleCardDelete();
-      });
-    this._element
-      .querySelector(".element__image")
-      .addEventListener("click", () => {
-        this._handleCardClick();
-      });
+    this._likeButton.addEventListener("click", () => {
+      if (this._isLikedByMe()) {
+        this._rejectLike(this._setLikes, this._updateCardLikeIcon);
+      } else {
+        this._setLike(this._setLikes, this._updateCardLikeIcon);
+      }
+    });
+    this._deleteButton.addEventListener("click", () => {
+      this._handleCardDelete();
+    });
+    this._cardImage.addEventListener("click", () => {
+      this._handleCardClick();
+    });
   }
   _isLikedByMe() {
     return this._likes.some((like) => like._id === this._profileId);
   }
-
   _updateTrashIcon() {
     if (this._profileId !== this._ownerId) {
-      this._element.querySelector(".element__delete").remove();
+      this._deleteButton.remove();
     }
   }
-
   _setLikes(likes) {
     this._likes = likes;
   }
-
   _updateCardLikeIcon() {
     if (this._isLikedByMe()) {
-      this._element
-        .querySelector(".element__like")
-        .classList.add("element__like_active");
+      this._likeButton.classList.add("element__like_active");
     } else {
-      this._element
-        .querySelector(".element__like")
-        .classList.remove("element__like_active");
+      this._likeButton.classList.remove("element__like_active");
     }
-    this._element.querySelector(".element__counter-likes").textContent =
-      this._likes.length;
+    this._likeCounter.textContent = this._likes.length;
   }
   generate() {
     this._element = this._getTemplate();
+    this._cardImage = this._element.querySelector(".element__image");
+    this._cardText = this._element.querySelector(".element__text");
+    this._likeButton = this._element.querySelector(".element__like");
+    this._likeCounter = this._element.querySelector(".element__counter-likes");
+    this._deleteButton = this._element.querySelector(".element__delete");
+    this._cardText.textContent = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._updateCardLikeIcon();
     this._setEventListeners();
     this._updateTrashIcon();
-    this._element.querySelector(".element__text").textContent = this._name;
-    this._element.querySelector(".element__image").src = this._link;
-    this._element.querySelector(".element__image").alt = this._name;
     return this._element;
   }
 }
