@@ -4,13 +4,8 @@ import {
   buttonEdit,
   buttonAdd,
   buttonChangeAvatar,
-  formAdd,
-  formEdit,
-  formChangeAvatar,
   validateSelectors,
   userInfoSelectors,
-  formName,
-  formJob,
   apiConfig,
 } from "../components/utils/constants.js";
 import Api from "../components/Api.js";
@@ -35,8 +30,8 @@ function createNewCard(item, ownerId) {
         api
           .rejectLike(item._id)
           .then((item) => {
-            setLikes.bind(card)(item.likes);
-            updateLike.bind(card)();
+            card.setLikes(item.likes);
+            card.updateCardLikeIcon();
           })
           .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
       },
@@ -44,8 +39,8 @@ function createNewCard(item, ownerId) {
         api
           .setLike(item._id)
           .then((item) => {
-            setLikes.bind(card)(item.likes);
-            updateLike.bind(card)();
+            card.setLikes(item.likes);
+            card.updateCardLikeIcon();
           })
           .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
       },

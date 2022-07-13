@@ -44,10 +44,10 @@ export default class Card {
       this._deleteButton.remove();
     }
   }
-  _setLikes(likes) {
+  setLikes(likes) {
     this._likes = likes;
   }
-  _updateCardLikeIcon() {
+  updateCardLikeIcon() {
     if (this._isLikedByMe()) {
       this._likeButton.classList.add("element__like_active");
     } else {
@@ -65,7 +65,7 @@ export default class Card {
     this._cardText.textContent = this._name;
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._updateCardLikeIcon();
+    this.updateCardLikeIcon();
     this._setEventListeners();
     this._updateTrashIcon();
     return this._element;
