@@ -24,9 +24,9 @@ export default class Card {
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
       if (this._isLikedByMe()) {
-        this._rejectLike(this._setLikes, this._updateCardLikeIcon);
+        this._rejectLike();
       } else {
-        this._setLike(this._setLikes, this._updateCardLikeIcon);
+        this._setLike();
       }
     });
     this._deleteButton.addEventListener("click", () => {

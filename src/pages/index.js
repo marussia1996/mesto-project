@@ -26,7 +26,7 @@ function createNewCard(item, ownerId) {
       handleCardDelete: () => {
         popupDelete.open(item._id);
       },
-      rejectLike: (setLikes, updateLike) => {
+      rejectLike: () => {
         api
           .rejectLike(item._id)
           .then((item) => {
@@ -35,7 +35,7 @@ function createNewCard(item, ownerId) {
           })
           .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
       },
-      setLike: (setLikes, updateLike) => {
+      setLike: () => {
         api
           .setLike(item._id)
           .then((item) => {
