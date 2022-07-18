@@ -91,12 +91,7 @@ const popupEditInfo = new PopupWithForm(".popup_type_edit", (inputs) => {
   api
     .changeInfoProfile(inputs.name, inputs.about)
     .then((res) => {
-      userInfo.setUserInfo({
-        name: res.name,
-        about: res.about,
-        avatar: res.avatar,
-        _id: res._id,
-      });
+      userInfo.setUserInfo(res);
       popupEditInfo.close();
     })
     .catch((err) => {
@@ -113,12 +108,7 @@ const popupEditAvatar = new PopupWithForm(
     api
       .changeAvatar(inputs.link)
       .then((res) => {
-        userInfo.setUserInfo({
-          name: res.name,
-          about: res.about,
-          avatar: res.avatar,
-          _id: res._id,
-        });
+        userInfo.setUserInfo(res);
         popupEditAvatar.close();
       })
       .catch((err) => {
@@ -132,12 +122,7 @@ popupEditAvatar.setEventListeners();
 api
   .renderUserAndCards()
   .then(([user, data]) => {
-    userInfo.setUserInfo({
-      name: user.name,
-      about: user.about,
-      avatar: user.avatar,
-      _id: user._id,
-    });
+    userInfo.setUserInfo(user);
     cardSection = new Section(
       {
         items: data,
