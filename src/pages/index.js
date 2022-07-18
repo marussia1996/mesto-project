@@ -16,41 +16,6 @@ import Section from "../components/Section.js";
 import PopupWithConfirm from "../components/PopupWithConfirm";
 import PopupWithForm from "../components/PopupWithForm.js";
 
-function createNewCard(item, ownerId) {
-  const card = new Card(
-    {
-      data: item,
-      handleCardClick: () => {
-        popupImage.open(item);
-      },
-      handleCardDelete: () => {
-        popupDelete.open(item._id);
-      },
-      rejectLike: () => {
-        api
-          .rejectLike(item._id)
-          .then((item) => {
-            card.setLikes(item.likes);
-            card.updateCardLikeIcon();
-          })
-          .catch((err) => console.log(`Ошибка при снятии лайка: ${err}`));
-      },
-      setLike: () => {
-        api
-          .setLike(item._id)
-          .then((item) => {
-            card.setLikes(item.likes);
-            card.updateCardLikeIcon();
-          })
-          .catch((err) => console.log(`Ошибка при установке лайка: ${err}`));
-      },
-    },
-    ownerId,
-    "elem-template"
-  );
-  return card.generate();
-}
-
 //Объект Апи
 const api = new Api({ apiConfig: apiConfig });
 let cardSection;
@@ -60,12 +25,12 @@ const userInfo = new UserInfo({ selectors: userInfoSelectors });
 const popupImage = new PopupWithImage(".popup_type_image");
 popupImage.setEventListeners();
 const popupDelete = new PopupWithConfirm(".popup_type_delete", {
-  callbackSubmit: (idCard) => {
+  callbackSubmit: (card) => {
     api
-      .deleteCard(idCard)
+      .deleteCard(card._id)
       .then((res) => {
         popupDelete.close();
-        cardSection.deleteItem(idCard);
+        card.deleteCard();
       })
       .catch((err) => console.log(`Ошибка при удалении: ${err}`));
   },
@@ -76,8 +41,7 @@ const popupAddCard = new PopupWithForm(".popup_type_add", (inputs) => {
   api
     .addNewCard(inputs.name, inputs.link)
     .then((res) => {
-      cardSection.prependItem(res);
-      cardSection.prependElement(createNewCard(res, res.owner._id), res);
+      cardSection.addItem(res);
       popupAddCard.close();
     })
     .catch((err) => {
@@ -127,7 +91,40 @@ api
       {
         items: data,
         renderer: (item) => {
-          cardSection.appendElement(createNewCard(item, user._id), item);
+          const card = new Card(
+            {
+              data: item,
+              handleCardClick: () => {
+                popupImage.open(item);
+              },
+              handleCardDelete: () => {
+                popupDelete.open(card);
+              },
+              rejectLike: () => {
+                api
+                  .rejectLike(item._id)
+                  .then((item) => {
+                    card.setLikes(item.likes);
+                  })
+                  .catch((err) =>
+                    console.log(`Ошибка при снятии лайка: ${err}`)
+                  );
+              },
+              setLike: () => {
+                api
+                  .setLike(item._id)
+                  .then((item) => {
+                    card.setLikes(item.likes);
+                  })
+                  .catch((err) =>
+                    console.log(`Ошибка при установке лайка: ${err}`)
+                  );
+              },
+            },
+            user._id,
+            "elem-template"
+          );
+          return card.generate();
         },
       },
       ".elements"
