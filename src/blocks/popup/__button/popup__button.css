@@ -1,5 +1,6 @@
 .popup__button {
-  width: 358px;
+  /* max-width: 358px;
+  width: 100%; */
   padding: 12px 0;
   background: #000000;
   border-radius: 2px;
