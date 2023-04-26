@@ -2,7 +2,7 @@
   width: calc(100% - 31.25vw);
   max-width: 880px;
   min-height: 74px;
-  margin: 0 15.625vw 40px;
+  margin: 0 auto 40px;
   padding-top: 45px;
   border-bottom: solid 1px rgba(84,84,84,.7);
 }
